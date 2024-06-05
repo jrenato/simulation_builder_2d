@@ -6,3 +6,6 @@ res://Entities/Entities/StirlingEngine/stirling_engine_entity.gd
 res://Entities/Entities/StirlingEngine/stirling_engine_entity.tscn
 res://Entities/Blueprints/stirling_engine_blueprint.tscn
 res://Entities/Blueprints/stirling_engine_blueprint.gd
+res://Autoload/events.gd
+res://Systems/entity_tracker.gd
+res://Systems/simulation.gd

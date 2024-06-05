@@ -15,6 +15,10 @@ run/main_scene="res://Systems/Simulation.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.png"
 
+[autoload]
+
+Events="*res://Autoload/events.gd"
+
 [debug]
 
 gdscript/warnings/unused_parameter=0

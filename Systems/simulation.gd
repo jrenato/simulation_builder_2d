@@ -1,5 +1,6 @@
 extends Node
 
+var _tracker: EntityTracker = EntityTracker.new()
 
 @onready var _ground: TileMap = %GroundTiles
 
