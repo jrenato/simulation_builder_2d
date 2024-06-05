@@ -1,0 +1,8 @@
+res://Systems/Simulation.tscn
+res://Assets/Tileset.tres
+res://Entities/Blueprints/blueprint_entity.gd
+res://Entities/Entities/entity.gd
+res://Entities/Entities/StirlingEngine/stirling_engine_entity.gd
+res://Entities/Entities/StirlingEngine/stirling_engine_entity.tscn
+res://Entities/Blueprints/stirling_engine_blueprint.tscn
+res://Entities/Blueprints/stirling_engine_blueprint.gd

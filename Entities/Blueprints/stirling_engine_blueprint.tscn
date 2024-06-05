@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dltw1trspfkoc"]
+
+[ext_resource type="Script" path="res://Entities/Blueprints/stirling_engine_blueprint.gd" id="1_uqnei"]
+[ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_21evd"]
+
+[node name="StirlingEngineBlueprint" type="Node2D"]
+script = ExtResource("1_uqnei")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -18)
+texture = ExtResource("2_21evd")
+region_enabled = true
+region_rect = Rect2(889, 119, 102, 92)
