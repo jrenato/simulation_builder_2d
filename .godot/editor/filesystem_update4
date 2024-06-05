@@ -9,3 +9,5 @@ res://Entities/Blueprints/stirling_engine_blueprint.gd
 res://Autoload/events.gd
 res://Systems/entity_tracker.gd
 res://Systems/simulation.gd
+res://Systems/entity_placer.gd
+res://Entities/Player/player.gd

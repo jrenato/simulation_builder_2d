@@ -7,20 +7,21 @@ var entities: Dictionary = {}
 
 ## Adds an entity to the dictionary so we can prevent other entities from taking
 ## the same location.
-func place_entity(entity: Entity, cellv: Vector2) -> void:
+func place_entity(entity: Entity, cellv: Vector2i) -> void:
 	# If the cell is already taken, refuse to add it again.
 	if entities.has(cellv):
 		return
 
 	# Add the entity keyed by its coordinates on the map.
 	entities[cellv] = entity
+
 	# Emit the signal about the new entity.
 	Events.entity_placed.emit(entity, cellv)
 
 
 ## Removes an entity from the dictionary so other entities can take its place
 ## in its location on the map.
-func remove_entity(cellv: Vector2) -> void:
+func remove_entity(cellv: Vector2i) -> void:
 	# Refuse to function if the entity does not exist.
 	if not entities.has(cellv):
 		return
@@ -34,12 +35,12 @@ func remove_entity(cellv: Vector2) -> void:
 
 
 ## Returns true if there is an entity at the given location.
-func is_cell_occupied(cellv: Vector2) -> bool:
+func is_cell_occupied(cellv: Vector2i) -> bool:
 	return entities.has(cellv)
 
 
 ## Returns the entity at the given location, if it exists, or null otherwise.
-func get_entity_at(cellv: Vector2) -> Node2D:
+func get_entity_at(cellv: Vector2i) -> Node2D:
 	if entities.has(cellv):
 		return entities[cellv]
 	else:

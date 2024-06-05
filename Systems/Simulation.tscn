@@ -3,9 +3,10 @@
 [ext_resource type="TileSet" uid="uid://cpp2n7htf1e1e" path="res://Assets/Tileset.tres" id="1_70g0t"]
 [ext_resource type="Script" path="res://Systems/simulation.gd" id="1_q45le"]
 [ext_resource type="PackedScene" uid="uid://bipeisjlbibqs" path="res://Entities/Player/player.tscn" id="2_y48q4"]
-[ext_resource type="PackedScene" uid="uid://cstt5vsg7svpv" path="res://Entities/Entities/StirlingEngine/stirling_engine_entity.tscn" id="3_kh08y"]
+[ext_resource type="Script" path="res://Systems/entity_placer.gd" id="3_wjn7w"]
 
 [sub_resource type="TileSet" id="TileSet_f4jxd"]
+tile_shape = 1
 tile_size = Vector2i(100, 50)
 
 [node name="Simulation" type="Node"]
@@ -16,6 +17,7 @@ script = ExtResource("1_q45le")
 [node name="GroundTiles" type="TileMap" parent="GameWorld"]
 unique_name_in_owner = true
 y_sort_enabled = true
+position = Vector2(0, 25)
 tile_set = ExtResource("1_70g0t")
 format = 2
 layer_0/name = "Ground"
@@ -29,12 +31,12 @@ layer_1/tile_data = PackedInt32Array(65531, 262144, 2, 131067, 262144, 2, 196604
 y_sort_enabled = true
 
 [node name="EntityPlacer" type="TileMap" parent="GameWorld/YSort"]
+unique_name_in_owner = true
 y_sort_enabled = true
 tile_set = SubResource("TileSet_f4jxd")
 format = 2
 layer_0/y_sort_enabled = true
-
-[node name="StirlingEngineEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("3_kh08y")]
-position = Vector2(99, 75)
+script = ExtResource("3_wjn7w")
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
+unique_name_in_owner = true
