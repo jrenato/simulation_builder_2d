@@ -8,7 +8,7 @@ const MAXIMUM_WORK_DISTANCE: float = 275.0
 ## from the middle. Since we want our entities to be in the middle of the tile,
 ## we must add an offset to any world position that comes from the map that is
 ## half the vertical height of our tiles, 25 pixels on the Y-axis here.
-const POSITION_OFFSET: Vector2 = Vector2(0,25)
+const POSITION_OFFSET: Vector2 = Vector2(0, 25)
 
 ## Base time in seconds it takes to deconstruct an item.
 const DECONSTRUCT_TIME: float = 0.3
@@ -16,10 +16,14 @@ const DECONSTRUCT_TIME: float = 0.3
 ## Temporary variable to hold the active blueprint.
 ## For testing purposes, we hold it here until we build the inventory.
 var _blueprint: BlueprintEntity
+var _extra_blueprints: Array[BlueprintEntity]
 
 ## The simulation's entity tracker. We use its functions to know if a cell is available or it
 ## already has an entity.
 var _tracker: EntityTracker
+
+## Basically for wires
+var _flat_entities: Node2D
 
 ## The ground tiles. We can check the position we're trying to put an entity down on
 ## to see if the mouse is over the tilemap.
@@ -38,7 +42,8 @@ var _current_deconstruct_location: Vector2i = Vector2i.ZERO
 ## See the `_ready()` function below for an example of how we map a blueprint to a scene.
 ## Replace the `preload()` resource paths below with the paths where you saved your scenes.
 @onready var Library: Dictionary = {
-	"StirlingEngine": preload("res://Entities/Blueprints/stirling_engine_blueprint.tscn").instantiate(),
+	"StirlingEngine": preload("res://Entities/Entities/StirlingEngine/stirling_engine_blueprint.tscn").instantiate(),
+	"Wire": preload("res://Entities/Entities/Wire/wire_blueprint.tscn").instantiate()
 }
 @onready var _deconstruct_timer: Timer = %DesconstructTimer
 
@@ -47,12 +52,14 @@ func _ready() -> void:
 	# Use the existing blueprint to act as a key for the entity scene, so we can instance
 	# entities given their blueprint.
 	Library[Library.StirlingEngine] = preload("res://Entities/Entities/StirlingEngine/stirling_engine_entity.tscn")
+	Library[Library.Wire] = preload("res://Entities/Entities/Wire/wire_entity.tscn")
 
 
 ## Since we are temporarily instancing blueprints for the library until we have
 ## an inventory system, we must clean up the blueprints when the object leaves the tree.
 func _exit_tree() -> void:
 	Library.StirlingEngine.queue_free()
+	Library.Wire.queue_free()
 
 
 func _process(delta: float) -> void:
@@ -64,11 +71,12 @@ func _process(delta: float) -> void:
 
 ## Here's our setup() function. It sets the placer up with the data that it needs to function,
 ## and adds any pre-placed entities to the tracker.
-func setup(tracker: EntityTracker, ground: TileMap, player: CharacterBody2D) -> void:
+func setup(tracker: EntityTracker, ground: TileMap, flat_entities: Node2D, player: CharacterBody2D) -> void:
 	# We use the function to initialize our private references. As mentioned before, this approach
 	# makes refactoring easier, as the EntityPlacer doesn't need hard-coded paths to the EntityTracker,
 	# GroundTiles, and Player nodes.
 	_tracker = tracker
+	_flat_entities = flat_entities
 	_ground = ground
 	_player = player
 
@@ -127,6 +135,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if has_placeable_blueprint:
 			if not cell_is_occupied and is_close_to_player and is_on_ground:
 				_place_entity(cellv)
+				_update_neighboring_flat_entities(cellv)
 	# When right clicking...
 	elif event.is_action_pressed("right_click") and not has_placeable_blueprint:
 		# ...onto a tile within range that has an entity in it,
@@ -156,6 +165,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		_blueprint = Library.StirlingEngine
 		add_child(_blueprint)
 		_move_blueprint_in_world(cellv)
+	elif event.is_action_pressed("quickbar_2"):
+		if _blueprint:
+			remove_child(_blueprint)
+		_blueprint = Library.Wire
+		
+		add_child(_blueprint)
+		_move_blueprint_in_world(cellv)
 
 
 ## Moves the active blueprint in the world according to mouse movement,
@@ -179,6 +195,9 @@ func _move_blueprint_in_world(cellv: Vector2i) -> void:
 	else:
 		_blueprint.modulate = Color.RED
 
+	if _blueprint is WireBlueprint:
+		WireBlueprint.set_sprite_for_direction(_blueprint.sprite, _get_powered_neighbors(cellv))
+
 
 ## Places the entity corresponding to the active `_blueprint` in the world at the specified
 ## location, and informs the `EntityTracker`.
@@ -186,8 +205,13 @@ func _place_entity(cellv: Vector2i) -> void:
 	# Use the blueprint we prepared in _ready to instance a new entity.
 	var new_entity: Entity = Library[_blueprint].instantiate()
 
-	# Add it to the tilemap as a child so it gets sorted properly.
-	add_child(new_entity)
+	# Add it to the tilemap as a child so it gets sorted properly
+	if _blueprint is WireBlueprint:
+		var directions: int = _get_powered_neighbors(cellv)
+		_flat_entities.add_child(new_entity)
+		WireBlueprint.set_sprite_for_direction(new_entity.sprite, directions)
+	else:
+		add_child(new_entity)
 
 	# Snap its position to the map, adding `POSITION_OFFSET` to get the center of the grid cell.
 	new_entity.global_position = map_to_local(cellv)# + POSITION_OFFSET
@@ -199,8 +223,55 @@ func _place_entity(cellv: Vector2i) -> void:
 	_tracker.place_entity(new_entity, cellv)
 
 
+## Returns a bit-wise integer based on whether the nearby objects can carry power.
+func _get_powered_neighbors(cellv: Vector2i) -> int:
+	# Begin with a blank direction of 0
+	var direction: int = 0
+
+	# We loop over each neighboring direction from our `Types.NEIGHBORS` dictionary.
+	for neighbor in Types.NEIGHBORS.keys():
+		# We calculate the neighbor cell's coordinates.
+		var key: Vector2i = cellv + Types.NEIGHBORS[neighbor]
+
+		# We get the entity in that cell if there is one.
+		if _tracker.is_cell_occupied(key):
+			var entity: Entity = _tracker.get_entity_at(key)
+
+			# If the entity is part of any of the power groups,
+			if (
+				entity.is_in_group(Types.POWER_MOVERS)
+				or entity.is_in_group(Types.POWER_RECEIVERS)
+				or entity.is_in_group(Types.POWER_SOURCES)
+			):
+			# We combine the number with the OR bitwise operator.
+			# It's like using +=, but | prevents the same number from adding to itself.
+			# Types.Direction.RIGHT (1) + Types.Direction.RIGHT (1) results in DOWN (2), which is wrong.
+			# Types.Direction.RIGHT (1) | Types.Direction.RIGHT (1) still results in RIGHT (1).
+			# Since we are iterating over all four directions and will not repeat, you can use +,
+			# but I use the | operator to be more explicit about comparing bitwise enum FLAGS.
+				direction |= neighbor
+
+	return direction
+
+
+## Looks at each of the neighboring tiles and updates each of them to use the
+## correct graphics based on their own neighbors.
+func _update_neighboring_flat_entities(cellv: Vector2i) -> void:
+	# For each neighboring tile,
+	for neighbor in Types.NEIGHBORS.keys():
+		# We get the entity, if there is one
+		var key: Vector2i = cellv + Types.NEIGHBORS[neighbor]
+		var entity: Entity = _tracker.get_entity_at(key)
+
+		# If it's a wire, we have that wire update its graphics to connect to the new
+		# entity.
+		if entity and entity is WireEntity:
+			var tile_directions: int = _get_powered_neighbors(key)
+			WireBlueprint.set_sprite_for_direction(entity.sprite, tile_directions)
+
+
 ## Begin the deconstruction process at the current cell
-func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
+func _deconstruct(event_position: Vector2, cellv: Vector2i) -> void:
 	# We connect to the timer's `timeout` signal. We pass in the targeted tile as a
 	# bind argument and make sure that the signal disconnects after emitting once
 	# using the CONNECT_ONESHOT flag. This is because once the signal has triggered,
@@ -217,11 +288,12 @@ func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
 
 
 ## Finish the deconstruction and delete the entity from the game world.
-func _finish_deconstruct(cellv: Vector2) -> void:
+func _finish_deconstruct(cellv: Vector2i) -> void:
 	# This function will drop the deconstructed entity as a pickup item,
 	# but we haven't implemented an inventory yet, so we only remove the entity.
-	var entity := _tracker.get_entity_at(cellv)
+	#var entity: Entity = _tracker.get_entity_at(cellv)
 	_tracker.remove_entity(cellv)
+	_update_neighboring_flat_entities(cellv)
 
 
 func _abort_deconstruct() -> void:

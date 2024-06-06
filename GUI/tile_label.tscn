@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7mu11jjtkrs5"]
+
+[ext_resource type="Script" path="res://GUI/tile_label.gd" id="1_yhpqf"]
+
+[node name="TileLabel" type="Node2D"]
+script = ExtResource("1_yhpqf")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0
+text = "0, 0"
+horizontal_alignment = 1

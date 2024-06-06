@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b64ga5qkah0hp"]
+
+[ext_resource type="Script" path="res://Entities/Entities/Wire/wire_entity.gd" id="1_vljof"]
+[ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="2_pe35f"]
+
+[node name="WireEntity" type="Node2D" groups=["power_movers"]]
+script = ExtResource("1_vljof")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 25)
+texture = ExtResource("2_pe35f")
+region_enabled = true
+region_rect = Rect2(120, 10, 100, 100)

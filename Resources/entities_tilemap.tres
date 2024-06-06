@@ -2,4 +2,5 @@
 
 [resource]
 tile_shape = 1
+tile_layout = 5
 tile_size = Vector2i(100, 50)

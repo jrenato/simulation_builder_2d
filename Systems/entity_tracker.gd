@@ -40,7 +40,7 @@ func is_cell_occupied(cellv: Vector2i) -> bool:
 
 
 ## Returns the entity at the given location, if it exists, or null otherwise.
-func get_entity_at(cellv: Vector2i) -> Node2D:
+func get_entity_at(cellv: Vector2i) -> Entity:
 	if entities.has(cellv):
 		return entities[cellv]
 	else:
