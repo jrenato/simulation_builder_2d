@@ -22,8 +22,6 @@ func _ready() -> void:
 
 
 func numerate_ground() -> void:
-	#var initial_coord: Vector2 = Vector2i(0, 0)
-	#add_tile_label(initial_coord)
 	for tile_coord in _ground.get_used_cells(0):
 		add_tile_label(tile_coord)
 
