@@ -35,5 +35,8 @@ format = 2
 layer_0/y_sort_enabled = true
 script = ExtResource("3_wjn7w")
 
+[node name="DesconstructTimer" type="Timer" parent="GameWorld/YSort/EntityPlacer"]
+unique_name_in_owner = true
+
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
 unique_name_in_owner = true

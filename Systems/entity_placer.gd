@@ -10,6 +10,9 @@ const MAXIMUM_WORK_DISTANCE: float = 275.0
 ## half the vertical height of our tiles, 25 pixels on the Y-axis here.
 const POSITION_OFFSET: Vector2 = Vector2(0,25)
 
+## Base time in seconds it takes to deconstruct an item.
+const DECONSTRUCT_TIME: float = 0.3
+
 ## Temporary variable to hold the active blueprint.
 ## For testing purposes, we hold it here until we build the inventory.
 var _blueprint: BlueprintEntity
@@ -24,7 +27,11 @@ var _ground: TileMap
 
 ## The player entity. We can use it to check the distance from the mouse to prevent
 ## the player from interacting with entities that are too far away.
-var _player: CharacterBody2D
+var _player: Player
+
+## The variable below keeps track of the current deconstruction target cell. If the mouse moves
+## to another cell, we can abort the operation by checking against this value.
+var _current_deconstruct_location: Vector2i = Vector2i.ZERO
 
 ## Temporary variable to store references to entities and blueprint scenes.
 ## We split it in two: blueprints keyed by their names and entities keyed by their blueprints.
@@ -33,6 +40,7 @@ var _player: CharacterBody2D
 @onready var Library: Dictionary = {
 	"StirlingEngine": preload("res://Entities/Blueprints/stirling_engine_blueprint.tscn").instantiate(),
 }
+@onready var _deconstruct_timer: Timer = %DesconstructTimer
 
 
 func _ready() -> void:
@@ -81,6 +89,12 @@ func setup(tracker: EntityTracker, ground: TileMap, player: CharacterBody2D) -> 
 # Below, we start by storing the result of calculations and comparisons in variables. Doing so makes
 # the code easy to read.
 func _unhandled_input(event: InputEvent) -> void:
+	# If the user releases right-click or clicks another mouse button, we can abort.
+	# We catch all mouse button inputs here because the `_abort_deconstruct()` function
+	# below will safely disconnect the timer and stop it.
+	if event is InputEventMouseButton:
+		_abort_deconstruct()
+
 	# Get the mouse position in world coordinates relative to world entities.
 	# event.global_position and event.position return mouse positions relative
 	# to the screen, but we have a camera that can move around the world.
@@ -113,9 +127,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		if has_placeable_blueprint:
 			if not cell_is_occupied and is_close_to_player and is_on_ground:
 				_place_entity(cellv)
+	# When right clicking...
+	elif event.is_action_pressed("right_click") and not has_placeable_blueprint:
+		# ...onto a tile within range that has an entity in it,
+		if cell_is_occupied and is_close_to_player:
+			# we remove that entity.
+			_deconstruct(global_mouse_position, cellv)
 	# If the mouse moved and we have a blueprint in hand, we update the blueprint's ghost so it
 	# follows the mouse cursor.
 	elif event is InputEventMouseMotion:
+		# If the mouse moves and slips off the target tile, then we can abort
+		# the deconstruction process.
+		if cellv != _current_deconstruct_location:
+			_abort_deconstruct()
+
 		if has_placeable_blueprint:
 			_move_blueprint_in_world(cellv)
 	# When the user presses the drop button and we are holding a blueprint, we would
@@ -159,7 +184,7 @@ func _move_blueprint_in_world(cellv: Vector2i) -> void:
 ## location, and informs the `EntityTracker`.
 func _place_entity(cellv: Vector2i) -> void:
 	# Use the blueprint we prepared in _ready to instance a new entity.
-	var new_entity: Node2D = Library[_blueprint].instantiate()
+	var new_entity: Entity = Library[_blueprint].instantiate()
 
 	# Add it to the tilemap as a child so it gets sorted properly.
 	add_child(new_entity)
@@ -172,3 +197,34 @@ func _place_entity(cellv: Vector2i) -> void:
 
 	# Register the new entity in the `EntityTracker` so all the signals can go up, as with systems.
 	_tracker.place_entity(new_entity, cellv)
+
+
+## Begin the deconstruction process at the current cell
+func _deconstruct(event_position: Vector2, cellv: Vector2) -> void:
+	# We connect to the timer's `timeout` signal. We pass in the targeted tile as a
+	# bind argument and make sure that the signal disconnects after emitting once
+	# using the CONNECT_ONESHOT flag. This is because once the signal has triggered,
+	# we do not want to have to disconnect manually. Once the timer ends, the deconstruct
+	# operation ends.
+		
+	# We call the `_finish_deconstruct()` function when the timer times out. We'll code it next.
+	_deconstruct_timer.timeout.connect(_finish_deconstruct.bind(cellv), CONNECT_ONE_SHOT)
+
+	# We then start the timer and store the cell we're targeting, which allows us to cancel
+	# the operation if the player's mouse moves to another cell.
+	_deconstruct_timer.start(DECONSTRUCT_TIME)
+	_current_deconstruct_location = cellv
+
+
+## Finish the deconstruction and delete the entity from the game world.
+func _finish_deconstruct(cellv: Vector2) -> void:
+	# This function will drop the deconstructed entity as a pickup item,
+	# but we haven't implemented an inventory yet, so we only remove the entity.
+	var entity := _tracker.get_entity_at(cellv)
+	_tracker.remove_entity(cellv)
+
+
+func _abort_deconstruct() -> void:
+	if _deconstruct_timer.is_connected("timeout", _finish_deconstruct):
+		_deconstruct_timer.disconnect("timeout", _finish_deconstruct)
+	_deconstruct_timer.stop()
