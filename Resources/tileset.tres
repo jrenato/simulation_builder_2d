@@ -1,14 +1,16 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cpp2n7htf1e1e"]
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cgxr4kr0mbhgb"]
 
-[ext_resource type="Texture2D" uid="uid://b51vo4lwl0bul" path="res://Assets/tileset.svg" id="1_0oxfq"]
+[ext_resource type="Texture2D" uid="uid://b51vo4lwl0bul" path="res://Assets/tileset.svg" id="1_wxwnn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_re2m6"]
-texture = ExtResource("1_0oxfq")
+resource_name = "Tiles"
+texture = ExtResource("1_wxwnn")
 margins = Vector2i(10, 10)
 separation = Vector2i(10, 10)
 texture_region_size = Vector2i(100, 100)
 0:0/next_alternative_id = 8
 0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -25)
 0:0/1 = 1
 0:0/1/flip_h = true
 0:0/2 = 2
@@ -80,6 +82,7 @@ texture_region_size = Vector2i(100, 100)
 7:1/0 = 0
 6:1/0 = 0
 4:2/0 = 0
+4:2/0/texture_origin = Vector2i(0, -25)
 4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-50, -25, 0, -50, 50, -25, 50, 25, 0, 50, -50, 25)
 
 [resource]

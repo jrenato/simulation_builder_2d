@@ -8,5 +8,8 @@ var _tracker: EntityTracker = EntityTracker.new()
 
 
 func _ready() -> void:
-	_ground.set_layer_modulate(1, Color(_ground.get_layer_modulate(1), 0.0))
+	for i in range(_ground.get_layers_count()):
+		if _ground.get_layer_name(i) == 'Barrier':
+			_ground.set_layer_modulate(i, Color(_ground.get_layer_modulate(i), 0.0))
+
 	_entity_placer.setup(_tracker, _ground, _player)

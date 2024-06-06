@@ -47,6 +47,13 @@ func _exit_tree() -> void:
 	Library.StirlingEngine.queue_free()
 
 
+func _process(delta: float) -> void:
+	var has_placeable_blueprint: bool = _blueprint and _blueprint.placeable
+	# If we have a blueprint in hand, keep it updated and snapped to the grid
+	if has_placeable_blueprint:
+		_move_blueprint_in_world(local_to_map(get_global_mouse_position()))
+
+
 ## Here's our setup() function. It sets the placer up with the data that it needs to function,
 ## and adds any pre-placed entities to the tracker.
 func setup(tracker: EntityTracker, ground: TileMap, player: CharacterBody2D) -> void:
@@ -130,7 +137,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## and tints the blueprint based on whether the tile is valid.
 func _move_blueprint_in_world(cellv: Vector2i) -> void:
 	# Snap the blueprint's position to the mouse with an offset
-	_blueprint.global_position = map_to_local(cellv) + POSITION_OFFSET
+	_blueprint.global_position = map_to_local(cellv)# + POSITION_OFFSET
 
 	# Determine each of the placeable conditions
 	var is_close_to_player: bool = (
@@ -158,7 +165,7 @@ func _place_entity(cellv: Vector2i) -> void:
 	add_child(new_entity)
 
 	# Snap its position to the map, adding `POSITION_OFFSET` to get the center of the grid cell.
-	new_entity.global_position = map_to_local(cellv) + POSITION_OFFSET
+	new_entity.global_position = map_to_local(cellv)# + POSITION_OFFSET
 
 	# Call `setup()` on the entity so it can use any data the blueprint holds to configure itself.
 	new_entity._setup(_blueprint)

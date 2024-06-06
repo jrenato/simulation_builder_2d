@@ -1,13 +1,9 @@
 res://Systems/Simulation.tscn
 res://Assets/Tileset.tres
-res://Entities/Blueprints/blueprint_entity.gd
-res://Entities/Entities/entity.gd
-res://Entities/Entities/StirlingEngine/stirling_engine_entity.gd
 res://Entities/Entities/StirlingEngine/stirling_engine_entity.tscn
-res://Entities/Blueprints/stirling_engine_blueprint.tscn
-res://Entities/Blueprints/stirling_engine_blueprint.gd
-res://Autoload/events.gd
-res://Systems/entity_tracker.gd
 res://Systems/simulation.gd
+res://Resources/entities_tilemap.tres
+res://Entities/Blueprints/stirling_engine_blueprint.tscn
 res://Systems/entity_placer.gd
-res://Entities/Player/player.gd
+res://Resources/tileset.tres
+res://Systems/entity_tracker.gd
