@@ -16,7 +16,6 @@ const DECONSTRUCT_TIME: float = 0.3
 ## Temporary variable to hold the active blueprint.
 ## For testing purposes, we hold it here until we build the inventory.
 var _blueprint: BlueprintEntity
-var _extra_blueprints: Array[BlueprintEntity]
 
 ## The simulation's entity tracker. We use its functions to know if a cell is available or it
 ## already has an entity.
