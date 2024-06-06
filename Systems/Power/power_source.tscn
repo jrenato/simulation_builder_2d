@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0k42bfpsjrnw"]
+
+[ext_resource type="Script" path="res://Systems/Power/power_source.gd" id="1_haark"]
+
+[node name="PowerSource" type="Node"]
+script = ExtResource("1_haark")

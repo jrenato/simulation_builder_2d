@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://be6ku3jhhiqe5"]
+
+[ext_resource type="Script" path="res://Systems/Power/power_receiver.gd" id="1_0cqxg"]
+
+[node name="PowerReceiver" type="Node"]
+script = ExtResource("1_0cqxg")
