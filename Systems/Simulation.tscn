@@ -1,15 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://dglnlp8l7cwvc"]
+[gd_scene load_steps=6 format=3 uid="uid://dglnlp8l7cwvc"]
 
 [ext_resource type="Script" path="res://Systems/simulation.gd" id="1_q45le"]
 [ext_resource type="TileSet" uid="uid://cgxr4kr0mbhgb" path="res://Resources/tileset.tres" id="2_er2vg"]
-[ext_resource type="PackedScene" uid="uid://b7mu11jjtkrs5" path="res://GUI/tile_label.tscn" id="2_wevyk"]
 [ext_resource type="PackedScene" uid="uid://bipeisjlbibqs" path="res://Entities/Player/player.tscn" id="2_y48q4"]
 [ext_resource type="TileSet" uid="uid://ctwfcf83ekn8p" path="res://Resources/entities_tilemap.tres" id="3_703hk"]
 [ext_resource type="Script" path="res://Systems/entity_placer.gd" id="3_wjn7w"]
 
 [node name="Simulation" type="Node"]
 script = ExtResource("1_q45le")
-tile_label_scene = ExtResource("2_wevyk")
 
 [node name="GameWorld" type="Node2D" parent="."]
 
@@ -47,3 +45,8 @@ unique_name_in_owner = true
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
 unique_name_in_owner = true
 position = Vector2(50, -29)
+
+[node name="Timer" type="Timer" parent="GameWorld"]
+autostart = true
+
+[connection signal="timeout" from="GameWorld/Timer" to="." method="_on_timer_timeout"]

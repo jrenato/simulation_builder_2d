@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgsar1tiqfojd"]
+
+[ext_resource type="PackedScene" uid="uid://0k42bfpsjrnw" path="res://Systems/Power/power_source.tscn" id="1_34abb"]
+[ext_resource type="PackedScene" uid="uid://be6ku3jhhiqe5" path="res://Systems/Power/power_receiver.tscn" id="2_4aqoh"]
+[ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="3_iqw7i"]
+
+[node name="BatteryEntity" type="Area2D" groups=["power_receivers", "power_sources"]]
+
+[node name="PowerSource" parent="." instance=ExtResource("1_34abb")]
+
+[node name="PowerReceiver" parent="." instance=ExtResource("2_4aqoh")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -5)
+texture = ExtResource("3_iqw7i")
+region_enabled = true
+region_rect = Rect2(340, 120, 100, 100)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-50, 1, -50, -9, 0, -35, 50, -8, 50, 0, 0, 26)

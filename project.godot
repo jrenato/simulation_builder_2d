@@ -33,6 +33,7 @@ window/stretch/mode="viewport"
 
 power_sources=""
 power_movers=""
+power_receivers=""
 
 [input]
 
