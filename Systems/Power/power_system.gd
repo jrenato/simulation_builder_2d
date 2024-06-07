@@ -250,7 +250,7 @@ func _on_systems_ticked(delta: float) -> void:
 					power_required -= receiver_total
 
 			# Notify the receiver of the power available to it from this source.
-			power_receiver.received_power.emit(min(remaining_power, power_required), delta)
+			power_receiver.power_received.emit(min(remaining_power, power_required), delta)
 
 			# Add to the tally of the power required from this power source.
 			# We keep it clamped so that the machine cannot draw more power than

@@ -41,8 +41,9 @@ var _current_deconstruct_location: Vector2i = Vector2i.ZERO
 ## See the `_ready()` function below for an example of how we map a blueprint to a scene.
 ## Replace the `preload()` resource paths below with the paths where you saved your scenes.
 @onready var Library: Dictionary = {
-	"StirlingEngine": preload("res://Entities/Entities/StirlingEngine/stirling_engine_blueprint.tscn").instantiate(),
-	"Wire": preload("res://Entities/Entities/Wire/wire_blueprint.tscn").instantiate()
+	"StirlingEngine": preload("res://Entities/PowerSystem/StirlingEngine/stirling_engine_blueprint.tscn").instantiate(),
+	"Wire": preload("res://Entities/PowerSystem/Wire/wire_blueprint.tscn").instantiate(),
+	"Battery": preload("res://Entities/PowerSystem/Battery/battery_blueprint.tscn").instantiate(),
 }
 @onready var _deconstruct_timer: Timer = %DesconstructTimer
 
@@ -50,8 +51,9 @@ var _current_deconstruct_location: Vector2i = Vector2i.ZERO
 func _ready() -> void:
 	# Use the existing blueprint to act as a key for the entity scene, so we can instance
 	# entities given their blueprint.
-	Library[Library.StirlingEngine] = preload("res://Entities/Entities/StirlingEngine/stirling_engine_entity.tscn")
-	Library[Library.Wire] = preload("res://Entities/Entities/Wire/wire_entity.tscn")
+	Library[Library.StirlingEngine] = preload("res://Entities/PowerSystem/StirlingEngine/stirling_engine_entity.tscn")
+	Library[Library.Wire] = preload("res://Entities/PowerSystem/Wire/wire_entity.tscn")
+	Library[Library.Battery] = preload("res://Entities/PowerSystem/Battery/battery_entity.tscn")
 
 
 ## Since we are temporarily instancing blueprints for the library until we have
@@ -59,6 +61,7 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	Library.StirlingEngine.queue_free()
 	Library.Wire.queue_free()
+	Library.Battery.queue_free()
 
 
 func _process(delta: float) -> void:
@@ -157,6 +160,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("drop") and _blueprint:
 		remove_child(_blueprint)
 		_blueprint = null
+	## Rotate the blueprint's power indicator if it has one
+	elif event.is_action_pressed("rotate_blueprint") and _blueprint:
+		_blueprint.rotate_blueprint()
 	# We put our quickbar actions for testing purposes and hardcode them to specific entities.
 	elif event.is_action_pressed("quickbar_1"):
 		if _blueprint:
@@ -169,6 +175,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			remove_child(_blueprint)
 		_blueprint = Library.Wire
 		
+		add_child(_blueprint)
+		_move_blueprint_in_world(cellv)
+	elif event.is_action_pressed("quickbar_3"):
+		if _blueprint:
+			remove_child(_blueprint)
+		_blueprint = Library.Battery
 		add_child(_blueprint)
 		_move_blueprint_in_world(cellv)
 

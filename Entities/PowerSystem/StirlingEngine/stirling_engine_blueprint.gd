@@ -1,4 +1,4 @@
-extends BlueprintEntity
+class_name StirlingEngineBlueprint extends BlueprintEntity
 
 
 @export var deconstruct_filter: String

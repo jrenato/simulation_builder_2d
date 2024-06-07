@@ -5,7 +5,7 @@ class_name PowerReceiver extends Node
 ## Signal for the power system to notify the component that it took
 ## a certain amount of power from the power source. Allows entities to react accordingly.
 ## For example, a battery can lower its stored amount or a generator can burn a tick of fuel.
-signal received_power(ammount: float, delta: float)
+signal power_received(amount: float, delta: float)
 
 ## The maximum amount of power the machine can provide in units per tick.
 @export var power_required: float = 10.0

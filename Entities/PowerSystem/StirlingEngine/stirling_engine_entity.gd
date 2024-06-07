@@ -1,4 +1,4 @@
-extends Entity
+class_name StirlingEngineEntity extends Entity
 
 ## The following two constants are respectively the amount of time the tween animation takes
 ## to ramp up to full speed and to shutdown.
