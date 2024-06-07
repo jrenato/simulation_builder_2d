@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dltw1trspfkoc"]
 
-[ext_resource type="Script" path="res://Entities/StirlingEngine/stirling_engine_blueprint.gd" id="1_uqnei"]
+[ext_resource type="Script" path="res://Entities/PowerSystem/StirlingEngine/stirling_engine_blueprint.gd" id="1_uqnei"]
 [ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_21evd"]
 
 [node name="StirlingEngineBlueprint" type="Node2D" groups=["power_sources"]]

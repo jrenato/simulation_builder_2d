@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://k7scnoksyphh"]
 
-[ext_resource type="Script" path="res://Entities/Wire/wire_blueprint.gd" id="1_610h2"]
+[ext_resource type="Script" path="res://Entities/PowerSystem/Wire/wire_blueprint.gd" id="1_610h2"]
 [ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="1_aug21"]
 
 [node name="WireBlueprint" type="Node2D"]

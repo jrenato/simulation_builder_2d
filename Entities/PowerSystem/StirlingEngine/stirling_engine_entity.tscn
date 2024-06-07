@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cstt5vsg7svpv"]
 
-[ext_resource type="Script" path="res://Entities/StirlingEngine/stirling_engine_entity.gd" id="1_83y0f"]
+[ext_resource type="Script" path="res://Entities/PowerSystem/StirlingEngine/stirling_engine_entity.gd" id="1_83y0f"]
 [ext_resource type="Texture2D" uid="uid://b51vo4lwl0bul" path="res://Assets/tileset.svg" id="1_r82gv"]
 [ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="2_2j7f2"]
 [ext_resource type="PackedScene" uid="uid://0k42bfpsjrnw" path="res://Systems/Power/power_source.tscn" id="4_6b0jd"]
