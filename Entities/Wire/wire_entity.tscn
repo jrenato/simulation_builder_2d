@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b64ga5qkah0hp"]
 
-[ext_resource type="Script" path="res://Entities/Entities/Wire/wire_entity.gd" id="1_vljof"]
+[ext_resource type="Script" path="res://Entities/Wire/wire_entity.gd" id="1_vljof"]
 [ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="2_pe35f"]
 
 [node name="WireEntity" type="Node2D" groups=["power_movers"]]
