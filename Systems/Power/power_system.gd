@@ -85,14 +85,14 @@ func _on_entity_removed(entity: Entity, cellv: Vector2i) -> void:
 
 ## Replace all paths with new ones based on the components' current state.
 func _retrace_paths() -> void:
-		# Clear old paths.
+	# Clear old paths.
 	paths.clear()
 	# For each power source...
 	for source in power_sources.keys():
 		# ...start a brand new path trace so all cells are possible contenders,
 		cells_travelled.clear()
 		# trace the path the current cell location, with an array with the source's cell as index 0.
-		var path := _trace_path_from(source, [source])
+		var path: Array = _trace_path_from(source, [source])
 		# And we add the result to the `paths` array.
 		paths.push_back(path)
 
@@ -107,21 +107,21 @@ func _trace_path_from(cellv: Vector2i, path: Array) -> Array:
 
 	# The default direction for most components, like the generator, is omni-directional,
 	# that's UP + LEFT + RIGHT + DOWN in our Types.
-	var direction := 15
+	var direction: int = 15
 	# If the current cell is a power source component, use _its_ direction instead.
 	if power_sources.has(cellv):
 		direction = power_sources[cellv].output_direction
 
 	# Get the power receivers that are neighbors to this cell, if there are any,
 	# based on the direction.
-	var receivers := _find_neighbors_in(cellv, power_receivers, direction)
+	var receivers: Array = _find_neighbors_in(cellv, power_receivers, direction)
 	for receiver in receivers:
 		if not receiver in cells_travelled and not receiver in path:
 			# Create an integer that indicates the direction power is
 			# traveling in to compare it to the receiver's direction.
 			# For example, if the power is traveling from left to right but the receiver
 			# does not accept power coming from _its_ left, it should not be in the list.
-			var combined_direction := _combine_directions(receiver, cellv)
+			var combined_direction: int = _combine_directions(receiver, cellv)
 			# Get the power receiver
 			var power_receiver: PowerReceiver = power_receivers[receiver]
 			# If the current direction does not match any of the receiver's possible
@@ -152,7 +152,7 @@ func _trace_path_from(cellv: Vector2i, path: Array) -> Array:
 
 	# We've done the receivers. Now, we check for any possible wires so we can keep
 	# traveling.
-	var movers := _find_neighbors_in(cellv, power_movers, direction)
+	var movers: Array = _find_neighbors_in(cellv, power_movers, direction)
 
 	# Call this same function again from the new cell position for any wire that
 	# found and travel from there, and return the result, so long as we
@@ -169,10 +169,9 @@ func _trace_path_from(cellv: Vector2i, path: Array) -> Array:
 ## For each neighbor in the given direction, check if it exists in the collection we specify,
 ## and return an array of map positions with those that do.
 func _find_neighbors_in(cellv: Vector2i, collection: Dictionary, output_directions: int = 15) -> Array:
-	var neighbors := []
+	var neighbors: Array = []
 	# For each of UP, DOWN, LEFT and RIGHT
 	for neighbor in Types.NEIGHBORS.keys():
-
 		# With binary numbers, comparing two values with the "&" operator compares binary bit of the two numbers,
 		# resulting in a number whose bits that match are 1 and those that don't are 0.
 		# For example, in binary, 1 is 0001, 2 is 0010, 3 is 0011, and 4 is 0100.
@@ -218,18 +217,16 @@ func _on_systems_ticked(delta: float) -> void:
 	for path in paths:
 		# Get the path's power source, which is the first element
 		var power_source: PowerSource = power_sources[path[0]]
-
 		# Get the effective power the source has to give. It cannot provide more than that amount.
-		var source_power := power_source.get_effective_power()
+		var source_power: float = power_source.get_effective_power()
 		# In this variable, we keep a tally of how much power remains in the path. It begins at the
 		# source power.
-		var remaining_power := source_power
-
+		var remaining_power: float = source_power
 		# A running tally of the power drawn by receivers in this path.
-		var power_draw := 0.0
+		var power_draw: float = 0.0
 
 		# For each power receiver in the path (elements of the `path` array after index 0)
-		for cell in path.slice(1, path.size()-1):
+		for cell in path.slice(1, path.size()):
 			# If, for some reason, the element is not in our list, skip it.
 			if not power_receivers.has(cell):
 				continue
@@ -237,7 +234,7 @@ func _on_systems_ticked(delta: float) -> void:
 			# Get the actual power receiver component and calculate how much power
 			# it desires.
 			var power_receiver: PowerReceiver = power_receivers[cell]
-			var power_required := power_receiver.get_effective_power()
+			var power_required: float = power_receiver.get_effective_power()
 
 			# Keep track of the total amount of power each receiver has already
 			# received, in case of more than one power source. Subtract the power

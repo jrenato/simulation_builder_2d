@@ -62,7 +62,6 @@ func _update_stored_power() -> void:
 
 ## Sets the stored power using the setter based on the received amount of power per second.
 func _on_power_receiver_power_received(amount: float, delta: float) -> void:
-	print("Battery received ", amount)
 	stored_power = stored_power + amount * delta
 
 

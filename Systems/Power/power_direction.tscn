@@ -7,18 +7,25 @@
 script = ExtResource("1_tihsv")
 
 [node name="W" type="Sprite2D" parent="."]
+position = Vector2(-65, -47)
 texture = ExtResource("1_noxja")
 region_enabled = true
-region_rect = Rect2(890, 120, 100, 100)
+region_rect = Rect2(894, 129, 39, 25)
 
 [node name="N" type="Sprite2D" parent="."]
+position = Vector2(60, -46)
 texture = ExtResource("1_noxja")
 region_enabled = true
+region_rect = Rect2(945, 125, 43, 31)
 
 [node name="E" type="Sprite2D" parent="."]
+position = Vector2(57, 29)
 texture = ExtResource("1_noxja")
 region_enabled = true
+region_rect = Rect2(945, 173, 42, 31)
 
 [node name="S" type="Sprite2D" parent="."]
+position = Vector2(-54, 26)
 texture = ExtResource("1_noxja")
 region_enabled = true
+region_rect = Rect2(892, 173, 44, 29)

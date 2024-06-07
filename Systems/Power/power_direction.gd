@@ -51,10 +51,8 @@ func set_indicators() -> void:
 		south.region_rect = REGIONS.UpRight
 
 
-## The setter for the blueprint's direction value.
-func _set_output_directions(value: int) -> void:
-	output_directions = value
-
+## Updates the blueprint's direction value.
+func update_output_directions() -> void:
 	# Wait until the blueprint has appeared in the scene tree at least once.
 	# We must do this as setters get called _before_ the node is in the scene tree,
 	# meaning the sprites are not yet in their onready variables.
@@ -63,7 +61,3 @@ func _set_output_directions(value: int) -> void:
 
 	# Set the sprite graphics according to the direction value.
 	set_indicators()
-
-
-func update_output_directions() -> void:
-	pass
