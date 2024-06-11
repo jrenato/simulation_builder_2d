@@ -15,11 +15,12 @@ mouse_filter = 2
 theme = ExtResource("1_0ppcf")
 script = ExtResource("2_khc5l")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="InventoryContainer" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 
-[node name="InventoryWindow" parent="HBoxContainer" instance=ExtResource("2_2r3so")]
+[node name="InventoryWindow" parent="InventoryContainer" instance=ExtResource("2_2r3so")]
 unique_name_in_owner = true
 layout_mode = 2
 

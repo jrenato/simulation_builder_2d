@@ -10,9 +10,10 @@ var _tracker: EntityTracker = EntityTracker.new()
 @onready var _flat_entities: Node2D = %FlatEntities
 @onready var _entity_placer: TileMap = %EntityPlacer
 @onready var _player: Player = %Player
-@onready var _power_system: PowerSystem = PowerSystem.new()
 @onready var _systems_timer: Timer = %SystemsTimer
 @onready var _gui: CenterContainer = %GUI
+
+@onready var _power_system: PowerSystem = PowerSystem.new()
 
 
 func _ready() -> void:

@@ -40,8 +40,8 @@ var _current_deconstruct_location: Vector2i = Vector2i.ZERO
 
 func _process(delta: float) -> void:
 	var has_placeable_blueprint: bool = _gui.blueprint and _gui.blueprint.placeable
-	# If we have a blueprint in hand, keep it updated and snapped to the grid
-	if has_placeable_blueprint:
+	# If we have a blueprint in hand, keep it updated and snapped to the grid if outside inventory
+	if has_placeable_blueprint and not _gui.mouse_in_gui:
 		_move_blueprint_in_world(local_to_map(get_global_mouse_position()))
 
 
@@ -127,7 +127,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if cellv != _current_deconstruct_location:
 			_abort_deconstruct()
 
-		if has_placeable_blueprint:
+		if has_placeable_blueprint and not _gui.mouse_in_gui:
 			_move_blueprint_in_world(cellv)
 	# When the user presses the drop button and we are holding a blueprint, we would
 	# drop the entity as a dropable entity that the player can pick up.

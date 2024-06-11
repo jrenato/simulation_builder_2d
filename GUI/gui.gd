@@ -8,16 +8,26 @@ var blueprint: BlueprintEntity:
 	set = _set_blueprint,
 	get = _get_blueprint
 
+## If `true`, it means the mouse is over the `GUI` at the moment.
+var mouse_in_gui: bool = false
+
 @onready var player_inventory: MarginContainer = %InventoryWindow
 ## We use the reference to the drag preview in the setter and getter functions.
-@onready var _drag_preview: Control = %DragPreview
 @onready var is_open: bool = player_inventory.visible
+@onready var _drag_preview: Control = %DragPreview
+@onready var _inventory_container: HBoxContainer = %InventoryContainer
 
 
 func _ready() -> void:
 	# Here, we'll set up any GUI systems that require knowledge of the GUI node.
 	# We'll define `InventoryWindow.setup()` in the next lesson.
 	player_inventory.setup(self)
+
+
+func _process(delta: float) -> void:
+	var mouse_position: Vector2 = get_global_mouse_position()
+	# If the mouse is inside the GUI rect and the GUI is open, set it true.
+	mouse_in_gui = is_open and _inventory_container.get_rect().has_point(mouse_position)
 
 
 func _unhandled_input(event: InputEvent) -> void:
