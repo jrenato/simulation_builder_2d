@@ -10,6 +10,8 @@ class_name Entity extends Node2D
 ## For example, a tree could drop 5 logs. In that case, we'd set the `pickup_count` to `5` in the Inspector.
 @export var pickup_count: int = 1
 
+@export var type: Library.TYPE
+
 ## Any initialization step occurs in this override-able `_setup()` function. Overriding it
 ## is optional, but if the entity requires information from the blueprint,
 ## such as the direction of power, this is where we will code provide this information.

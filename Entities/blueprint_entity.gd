@@ -4,6 +4,8 @@ class_name BlueprintEntity extends Node2D
 ## should not be 'placed' like a machine.
 @export var placeable: bool = true
 
+@export var type: Library.TYPE
+
 ## We use `find_node()` to search for a `PowerDirection` instance. If it does not exist,
 ## then we don't worry about it: `find_node()` returns `null` if it finds nothing.
 ## A faster method would be `get_node()`, which only tests one path.

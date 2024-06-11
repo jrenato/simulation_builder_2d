@@ -36,32 +36,7 @@ var _player: Player
 ## to another cell, we can abort the operation by checking against this value.
 var _current_deconstruct_location: Vector2i = Vector2i.ZERO
 
-## Temporary variable to store references to entities and blueprint scenes.
-## We split it in two: blueprints keyed by their names and entities keyed by their blueprints.
-## See the `_ready()` function below for an example of how we map a blueprint to a scene.
-## Replace the `preload()` resource paths below with the paths where you saved your scenes.
-@onready var Library: Dictionary = {
-	"StirlingEngine": preload("res://Entities/PowerSystem/StirlingEngine/stirling_engine_blueprint.tscn").instantiate(),
-	"Wire": preload("res://Entities/PowerSystem/Wire/wire_blueprint.tscn").instantiate(),
-	"Battery": preload("res://Entities/PowerSystem/Battery/battery_blueprint.tscn").instantiate(),
-}
 @onready var _deconstruct_timer: Timer = %DesconstructTimer
-
-
-func _ready() -> void:
-	# Use the existing blueprint to act as a key for the entity scene, so we can instance
-	# entities given their blueprint.
-	Library[Library.StirlingEngine] = preload("res://Entities/PowerSystem/StirlingEngine/stirling_engine_entity.tscn")
-	Library[Library.Wire] = preload("res://Entities/PowerSystem/Wire/wire_entity.tscn")
-	Library[Library.Battery] = preload("res://Entities/PowerSystem/Battery/battery_entity.tscn")
-
-
-## Since we are temporarily instancing blueprints for the library until we have
-## an inventory system, we must clean up the blueprints when the object leaves the tree.
-func _exit_tree() -> void:
-	Library.StirlingEngine.queue_free()
-	Library.Wire.queue_free()
-	Library.Battery.queue_free()
 
 
 func _process(delta: float) -> void:
@@ -166,21 +141,20 @@ func _unhandled_input(event: InputEvent) -> void:
 	# We put our quickbar actions for testing purposes and hardcode them to specific entities.
 	elif event.is_action_pressed("quickbar_1"):
 		if _blueprint:
-			remove_child(_blueprint)
-		_blueprint = Library.StirlingEngine
+			_blueprint.queue_free()
+		_blueprint = Library.blueprints[Library.TYPE.STIRLING].instantiate()
 		add_child(_blueprint)
 		_move_blueprint_in_world(cellv)
 	elif event.is_action_pressed("quickbar_2"):
 		if _blueprint:
-			remove_child(_blueprint)
-		_blueprint = Library.Wire
-		
+			_blueprint.queue_free()
+		_blueprint = Library.blueprints[Library.TYPE.WIRE].instantiate()
 		add_child(_blueprint)
 		_move_blueprint_in_world(cellv)
 	elif event.is_action_pressed("quickbar_3"):
 		if _blueprint:
-			remove_child(_blueprint)
-		_blueprint = Library.Battery
+			_blueprint.queue_free()
+		_blueprint = Library.blueprints[Library.TYPE.BATTERY].instantiate()
 		add_child(_blueprint)
 		_move_blueprint_in_world(cellv)
 
@@ -214,7 +188,7 @@ func _move_blueprint_in_world(cellv: Vector2i) -> void:
 ## location, and informs the `EntityTracker`.
 func _place_entity(cellv: Vector2i) -> void:
 	# Use the blueprint we prepared in _ready to instance a new entity.
-	var new_entity: Entity = Library[_blueprint].instantiate()
+	var new_entity: Entity = Library.entities[_blueprint.type].instantiate()
 
 	# Add it to the tilemap as a child so it gets sorted properly
 	if _blueprint is WireBlueprint:
