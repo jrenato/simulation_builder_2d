@@ -11,12 +11,21 @@ var blueprint: BlueprintEntity:
 @onready var player_inventory: MarginContainer = %InventoryWindow
 ## We use the reference to the drag preview in the setter and getter functions.
 @onready var _drag_preview: Control = %DragPreview
+@onready var is_open: bool = player_inventory.visible
 
 
 func _ready() -> void:
 	# Here, we'll set up any GUI systems that require knowledge of the GUI node.
 	# We'll define `InventoryWindow.setup()` in the next lesson.
 	player_inventory.setup(self)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_inventory"):
+		if is_open:
+			_close_inventories()
+		else:
+			_open_inventories()
 
 
 ## Forwards the `destroy_blueprint()` call to the drag preview.
@@ -39,3 +48,15 @@ func _set_blueprint(value: BlueprintEntity) -> void:
 ## Getter that returns the DragPreview's blueprint.
 func _get_blueprint() -> BlueprintEntity:
 	return _drag_preview.blueprint
+
+
+## Shows the inventory window, crafting window
+func _open_inventories() -> void:
+	is_open = true
+	player_inventory.visible = true
+
+
+## Hides the inventory window, crafting window, and any currently open machine GUI
+func _close_inventories() -> void:
+	is_open = false
+	player_inventory.visible = false

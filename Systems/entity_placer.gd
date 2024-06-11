@@ -13,9 +13,8 @@ const POSITION_OFFSET: Vector2 = Vector2(0, 25)
 ## Base time in seconds it takes to deconstruct an item.
 const DECONSTRUCT_TIME: float = 0.3
 
-## Temporary variable to hold the active blueprint.
-## For testing purposes, we hold it here until we build the inventory.
-var _blueprint: BlueprintEntity
+## Reference for gui to access the mouse's inventory
+var _gui: Control
 
 ## The simulation's entity tracker. We use its functions to know if a cell is available or it
 ## already has an entity.
@@ -40,7 +39,7 @@ var _current_deconstruct_location: Vector2i = Vector2i.ZERO
 
 
 func _process(delta: float) -> void:
-	var has_placeable_blueprint: bool = _blueprint and _blueprint.placeable
+	var has_placeable_blueprint: bool = _gui.blueprint and _gui.blueprint.placeable
 	# If we have a blueprint in hand, keep it updated and snapped to the grid
 	if has_placeable_blueprint:
 		_move_blueprint_in_world(local_to_map(get_global_mouse_position()))
@@ -48,10 +47,11 @@ func _process(delta: float) -> void:
 
 ## Here's our setup() function. It sets the placer up with the data that it needs to function,
 ## and adds any pre-placed entities to the tracker.
-func setup(tracker: EntityTracker, ground: TileMap, flat_entities: Node2D, player: CharacterBody2D) -> void:
+func setup(gui: Control, tracker: EntityTracker, ground: TileMap, flat_entities: Node2D, player: CharacterBody2D) -> void:
 	# We use the function to initialize our private references. As mentioned before, this approach
 	# makes refactoring easier, as the EntityPlacer doesn't need hard-coded paths to the EntityTracker,
 	# GroundTiles, and Player nodes.
+	_gui = gui
 	_tracker = tracker
 	_flat_entities = flat_entities
 	_ground = ground
@@ -87,7 +87,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	var global_mouse_position: Vector2 = get_global_mouse_position()
 
 	# We check whether we have a blueprint in hand and that the player can place it in the world.
-	var has_placeable_blueprint: bool = _blueprint and _blueprint.placeable
+	var has_placeable_blueprint: bool = _gui.blueprint and _gui.blueprint.placeable
 
 	# We check if the mouse is close enough to the Player node.
 	var is_close_to_player: bool = (
@@ -132,38 +132,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	# When the user presses the drop button and we are holding a blueprint, we would
 	# drop the entity as a dropable entity that the player can pick up.
 	# For testing purposes, the following code clears the blueprint from the active slot instead.
-	elif event.is_action_pressed("drop") and _blueprint:
-		remove_child(_blueprint)
-		_blueprint = null
+	elif event.is_action_pressed("drop") and _gui.blueprint:
+		remove_child(_gui.blueprint)
+		_gui.blueprint = null
 	## Rotate the blueprint's power indicator if it has one
-	elif event.is_action_pressed("rotate_blueprint") and _blueprint:
-		_blueprint.rotate_blueprint()
-	# We put our quickbar actions for testing purposes and hardcode them to specific entities.
-	elif event.is_action_pressed("quickbar_1"):
-		if _blueprint:
-			_blueprint.queue_free()
-		_blueprint = Library.blueprints[Library.TYPE.STIRLING].instantiate()
-		add_child(_blueprint)
-		_move_blueprint_in_world(cellv)
-	elif event.is_action_pressed("quickbar_2"):
-		if _blueprint:
-			_blueprint.queue_free()
-		_blueprint = Library.blueprints[Library.TYPE.WIRE].instantiate()
-		add_child(_blueprint)
-		_move_blueprint_in_world(cellv)
-	elif event.is_action_pressed("quickbar_3"):
-		if _blueprint:
-			_blueprint.queue_free()
-		_blueprint = Library.blueprints[Library.TYPE.BATTERY].instantiate()
-		add_child(_blueprint)
-		_move_blueprint_in_world(cellv)
+	elif event.is_action_pressed("rotate_blueprint") and _gui.blueprint:
+		_gui.blueprint.rotate_blueprint()
 
 
 ## Moves the active blueprint in the world according to mouse movement,
 ## and tints the blueprint based on whether the tile is valid.
 func _move_blueprint_in_world(cellv: Vector2i) -> void:
 	# Snap the blueprint's position to the mouse with an offset
-	_blueprint.global_position = map_to_local(cellv)# + POSITION_OFFSET
+	#_gui.blueprint.global_position = map_to_local(cellv)# + POSITION_OFFSET
+
+	# Set the blueprint's position and scale back to origin
+	_gui.blueprint.display_as_world_entity()
+
+		# Snap the blueprint's position to the mouse with an offset, transformed into
+	# viewport coordinates using `Transform2D.xform()`.
+	_gui.blueprint.global_position = get_viewport_transform() * map_to_local(cellv)# + POSITION_OFFSET
 
 	# Determine each of the placeable conditions
 	var is_close_to_player: bool = (
@@ -176,22 +164,22 @@ func _move_blueprint_in_world(cellv: Vector2i) -> void:
 
 	# Tint according to whether the current tile is valid or not.
 	if not cell_is_occupied and is_close_to_player and is_on_ground:
-		_blueprint.modulate = Color.WHITE
+		_gui.blueprint.modulate = Color.WHITE
 	else:
-		_blueprint.modulate = Color.RED
+		_gui.blueprint.modulate = Color.RED
 
-	if _blueprint is WireBlueprint:
-		WireBlueprint.set_sprite_for_direction(_blueprint.sprite, _get_powered_neighbors(cellv))
+	if _gui.blueprint is WireBlueprint:
+		WireBlueprint.set_sprite_for_direction(_gui.blueprint.sprite, _get_powered_neighbors(cellv))
 
 
 ## Places the entity corresponding to the active `_blueprint` in the world at the specified
 ## location, and informs the `EntityTracker`.
 func _place_entity(cellv: Vector2i) -> void:
 	# Use the blueprint we prepared in _ready to instance a new entity.
-	var new_entity: Entity = Library.entities[_blueprint.type].instantiate()
+	var new_entity: Entity = Library.entities[_gui.blueprint.type].instantiate()
 
 	# Add it to the tilemap as a child so it gets sorted properly
-	if _blueprint is WireBlueprint:
+	if _gui.blueprint is WireBlueprint:
 		var directions: int = _get_powered_neighbors(cellv)
 		_flat_entities.add_child(new_entity)
 		WireBlueprint.set_sprite_for_direction(new_entity.sprite, directions)
@@ -202,10 +190,16 @@ func _place_entity(cellv: Vector2i) -> void:
 	new_entity.global_position = map_to_local(cellv)# + POSITION_OFFSET
 
 	# Call `setup()` on the entity so it can use any data the blueprint holds to configure itself.
-	new_entity._setup(_blueprint)
+	new_entity._setup(_gui.blueprint)
 
 	# Register the new entity in the `EntityTracker` so all the signals can go up, as with systems.
 	_tracker.place_entity(new_entity, cellv)
+
+	if _gui.blueprint.stack_count == 1:
+		_gui.destroy_blueprint()
+	else:
+		_gui.blueprint.stack_count -= 1
+		_gui.update_label()
 
 
 ## Returns a bit-wise integer based on whether the nearby objects can carry power.

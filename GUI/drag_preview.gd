@@ -19,6 +19,10 @@ func _ready() -> void:
 	# parents.
 	set_as_top_level(true)
 
+	var slot_size: float = ProjectSettings.get_setting("game_gui/inventory_slot_size")
+	custom_minimum_size = Vector2(slot_size, slot_size)
+	size = custom_minimum_size
+
 
 ## Events in `_input()` happen regardless of the state of the GUI and they
 ## happen first so this callback is ideal for global events like matching the

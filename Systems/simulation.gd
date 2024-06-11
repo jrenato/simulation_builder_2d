@@ -12,12 +12,13 @@ var _tracker: EntityTracker = EntityTracker.new()
 @onready var _player: Player = %Player
 @onready var _power_system: PowerSystem = PowerSystem.new()
 @onready var _systems_timer: Timer = %SystemsTimer
+@onready var _gui: CenterContainer = %GUI
 
 
 func _ready() -> void:
 	_systems_timer.timeout.connect(_on_systems_timer_timeout)
 
-	_entity_placer.setup(_tracker, _ground, _flat_entities, _player)
+	_entity_placer.setup(_gui, _tracker, _ground, _flat_entities, _player)
 	_systems_timer.start(simulation_speed)
 	hide_barrier_layer()
 	#numerate_ground()

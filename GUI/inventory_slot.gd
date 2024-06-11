@@ -20,6 +20,14 @@ var gui: Control
 @onready var count_label: Label = %CountLabel
 
 
+func _ready() -> void:
+	var slot_size: float = ProjectSettings.get_setting("game_gui/inventory_slot_size")
+
+	# Force the panel's size and min size to match the project setting.
+	custom_minimum_size = Vector2(slot_size, slot_size)
+	size = custom_minimum_size
+
+
 ## Store a reference to the GUI so we can access the mouse's inventory.
 func setup(_gui: Control) -> void:
 	gui = _gui
@@ -42,9 +50,10 @@ func _set_held_item(value: BlueprintEntity) -> void:
 
 	# If the `held_item` is not `null`, add it as a child and make sure that it appears
 	# behind the label.
-	if is_instance_valid(held_item):
+	if held_item and is_instance_valid(held_item):
 		add_child(held_item)
 		move_child(held_item, 0)
+		held_item.display_as_inventory_icon()
 
 	# We update the stack count label.
 	_update_label()

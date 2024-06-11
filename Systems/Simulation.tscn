@@ -15,6 +15,7 @@ tile_label_scene = ExtResource("2_x6hjd")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GUI" parent="CanvasLayer" instance=ExtResource("3_31l27")]
+unique_name_in_owner = true
 
 [node name="SystemsTimer" type="Timer" parent="."]
 unique_name_in_owner = true
