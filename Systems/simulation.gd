@@ -4,7 +4,6 @@ extends Node
 @export var tile_label_scene: PackedScene
 
 var label_offset: Vector2 = Vector2(-12.5, -12.5)
-
 var _tracker: EntityTracker = EntityTracker.new()
 
 @onready var _ground: TileMap = %GroundTiles

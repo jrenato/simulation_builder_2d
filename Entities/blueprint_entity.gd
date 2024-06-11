@@ -3,8 +3,13 @@ class_name BlueprintEntity extends Node2D
 ## Whether the player can place this object in the world. For example, a lumber axe.
 ## should not be 'placed' like a machine.
 @export var placeable: bool = true
-
+## The type of blueprint
 @export var type: Library.TYPE
+## How many items can be in a stack of the given blueprint type.
+@export var stack_size: int = 1
+
+## How many items are actually in the stack of the current stack.
+var stack_count: int = 1
 
 ## We use `find_node()` to search for a `PowerDirection` instance. If it does not exist,
 ## then we don't worry about it: `find_node()` returns `null` if it finds nothing.

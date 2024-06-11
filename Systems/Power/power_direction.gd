@@ -12,9 +12,7 @@ const REGIONS := {
 ## A set of flags based on our `Types.Direction` enum. Allows you to choose the output
 ## direction(s) for the entity.
 @export_flags("RIGHT:1", "DOWN:2", "LEFT:4", "UP:8") var output_directions: int = 15:
-	set(value):
-		output_directions = value
-		update_output_directions()
+	set = update_output_directions
 
 ## References to the scene's four sprite nodes.
 @onready var west: Sprite2D = $W
@@ -52,12 +50,14 @@ func set_indicators() -> void:
 
 
 ## Updates the blueprint's direction value.
-func update_output_directions() -> void:
+func update_output_directions(value: int) -> void:
 	# Wait until the blueprint has appeared in the scene tree at least once.
 	# We must do this as setters get called _before_ the node is in the scene tree,
 	# meaning the sprites are not yet in their onready variables.
 	if not is_inside_tree():
 		await ready
+
+	output_directions = value
 
 	# Set the sprite graphics according to the direction value.
 	set_indicators()

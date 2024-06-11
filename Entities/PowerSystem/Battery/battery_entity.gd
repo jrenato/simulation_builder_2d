@@ -3,10 +3,7 @@ class_name BatteryEntity extends Entity
 @export var max_storage: float = 1000.0
 
 var stored_power: float = 0.0:
-	set(value):
-		# We set the stored power and prevent it from becoming negative.
-		stored_power = max(value, 0)
-		_update_stored_power()
+	set = _set_stored_power
 
 @onready var power_source: PowerSource = %PowerSource
 @onready var power_receiver: PowerReceiver = %PowerReceiver
@@ -37,10 +34,13 @@ func _setup(blueprint: BlueprintEntity) -> void:
 
 
 ## Set the efficiency in source and receiver based on the amount of stored power.
-func _update_stored_power() -> void:
+func _set_stored_power(value: float) -> void:
 	# Wait until the entity is ready to ensure we have access to the `receiver` and the `source` nodes.
 	if not is_inside_tree():
 		await ready
+
+	# We set the stored power and prevent it from becoming negative.
+	stored_power = max(value, 0)
 
 	# Set the receiver's efficiency.
 	power_receiver.efficiency = (
