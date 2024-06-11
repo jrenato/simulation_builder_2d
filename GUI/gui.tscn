@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://crxnjqw7urxn6"]
+[gd_scene load_steps=6 format=3 uid="uid://crxnjqw7urxn6"]
 
 [ext_resource type="Theme" path="res://Assets/Theme/builder_theme.tres" id="1_0ppcf"]
 [ext_resource type="PackedScene" uid="uid://bflfhkpqspaag" path="res://GUI/inventory_window.tscn" id="2_2r3so"]
 [ext_resource type="Script" path="res://GUI/gui.gd" id="2_khc5l"]
 [ext_resource type="PackedScene" uid="uid://caeitvne1dvun" path="res://GUI/drag_preview.tscn" id="3_s66n5"]
+[ext_resource type="PackedScene" uid="uid://cfwnk0yc8pc6a" path="res://GUI/quick_bar.tscn" id="5_6c3s7"]
 
 [node name="GUI" type="CenterContainer"]
 anchors_preset = 15
@@ -27,3 +28,19 @@ layout_mode = 2
 [node name="DragPreview" parent="." instance=ExtResource("3_s66n5")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 550
+
+[node name="QuickBarContainer" type="PanelContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+
+[node name="QuickBar" parent="MarginContainer/QuickBarContainer" instance=ExtResource("5_6c3s7")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8

@@ -29,6 +29,13 @@ func setup(_gui: Control) -> void:
 	inventories[0].slots[1].held_item = battery
 
 
+## Removes the provided quickbar from its current parent and makes it a sibling
+## of the other inventory bars.
+func claim_quickbar(quickbar: Control) -> void:
+	quickbar.get_parent().remove_child(quickbar)
+	inventory_bars.add_child(quickbar)
+
+
 ## Whenever we receive the `inventory_changed` signal, bubble up the signal from the inventory bars.
 func _on_inventory_bar_inventory_changed(slot: InventorySlot, held_item: BlueprintEntity) -> void:
 	inventory_changed.emit(slot, held_item)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfwnk0yc8pc6a"]
+
+[ext_resource type="Script" path="res://GUI/quick_bar.gd" id="1_qr5x7"]
+[ext_resource type="PackedScene" uid="uid://dgt52xlktg16m" path="res://GUI/quickbar_inventory_slot.tscn" id="2_6xwpg"]
+
+[node name="QuickBar" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 10
+script = ExtResource("1_qr5x7")
+InventorySlotScene = ExtResource("2_6xwpg")
