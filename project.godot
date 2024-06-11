@@ -35,6 +35,10 @@ power_sources=""
 power_movers=""
 power_receivers=""
 
+[gui]
+
+theme/custom="res://Assets/Theme/builder_theme.tres"
+
 [input]
 
 left={

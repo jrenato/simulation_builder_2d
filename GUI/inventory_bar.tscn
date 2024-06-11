@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://4vjolsmd3wyq"]
+
+[ext_resource type="Script" path="res://GUI/inventory_bar.gd" id="1_ja2yl"]
+[ext_resource type="PackedScene" uid="uid://clinwu4tynyoh" path="res://GUI/inventory_slot.tscn" id="2_tdcvl"]
+
+[node name="InventoryBar" type="HBoxContainer"]
+theme_override_constants/separation = 10
+script = ExtResource("1_ja2yl")
+InventorySlotScene = ExtResource("2_tdcvl")

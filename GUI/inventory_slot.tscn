@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://clinwu4tynyoh"]
+
+[ext_resource type="Script" path="res://GUI/inventory_slot.gd" id="1_748f3"]
+[ext_resource type="Theme" path="res://Assets/Theme/builder_theme.tres" id="1_wbmkq"]
+
+[node name="InventorySlot" type="Panel"]
+custom_minimum_size = Vector2(75, 75)
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_wbmkq")
+script = ExtResource("1_748f3")

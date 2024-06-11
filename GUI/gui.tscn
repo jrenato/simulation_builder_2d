@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://crxnjqw7urxn6"]
+
+[ext_resource type="Theme" path="res://Assets/Theme/builder_theme.tres" id="1_0ppcf"]
+[ext_resource type="PackedScene" uid="uid://bflfhkpqspaag" path="res://GUI/inventory_window.tscn" id="2_2r3so"]
+
+[node name="GUI" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_0ppcf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="InventoryWindow" parent="HBoxContainer" instance=ExtResource("2_2r3so")]
+layout_mode = 2

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b7mu11jjtkrs5"]
 
-[ext_resource type="Script" path="res://GUI/tile_label.gd" id="1_yhpqf"]
+[ext_resource type="Script" path="res://GUI/CustomNodes/tile_label.gd" id="1_yhpqf"]
 
 [node name="TileLabel" type="Node2D"]
 script = ExtResource("1_yhpqf")
