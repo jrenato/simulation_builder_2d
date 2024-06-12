@@ -36,6 +36,16 @@ func claim_quickbar(quickbar: Control) -> void:
 	inventory_bars.add_child(quickbar)
 
 
+## Returns an array of inventory slots that have a held item with
+## the same type from the inventory bars.
+func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
+	var output: Array [InventorySlot] = []
+	for inventory in inventories:
+		output += inventory.find_slots_with(item_type)
+
+	return output
+
+
 ## Whenever we receive the `inventory_changed` signal, bubble up the signal from the inventory bars.
 func _on_inventory_bar_inventory_changed(slot: InventorySlot, held_item: BlueprintEntity) -> void:
 	inventory_changed.emit(slot, held_item)

@@ -90,8 +90,7 @@ func _pop() -> void:
 		.set_trans(Tween.TRANS_SINE)\
 		.set_ease(Tween.EASE_OUT)
 
-	# Then middle point to end point. We delay this tween by the duration of the
-	# previous tween.
+	# Then middle point to end point.
 	tween.tween_property(self, "global_position", target_position, 0.25)\
 		.set_ease(Tween.EASE_IN)
 

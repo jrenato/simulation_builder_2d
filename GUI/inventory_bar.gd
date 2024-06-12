@@ -40,6 +40,18 @@ func _make_slots() -> void:
 		slots.append(slot)
 
 
+## Returns an array of inventory slots that have a held item that have
+## the same type provided.
+func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
+	var output: Array[InventorySlot] = []
+	for slot in slots:
+		# Check if there is an item and its type matches
+		if slot.held_item and slot.held_item.type == item_type:
+			output.push_back(slot)
+
+	return output
+
+
 ## Bubbles up the signal from the inventory bar up to the inventory window.
 func _on_slot_held_item_changed(slot: InventorySlot, held_item: BlueprintEntity) -> void:
 	inventory_changed.emit(slot, held_item)

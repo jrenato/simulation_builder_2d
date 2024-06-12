@@ -35,6 +35,7 @@ var mouse_in_gui: bool = false
 
 
 func _ready() -> void:
+	Events.entered_pickup_area.connect(_on_player_entered_pickup_area)
 	# Here, we'll set up any GUI systems that require knowledge of the GUI node.
 	# We'll define `InventoryWindow.setup()` in the next lesson.
 	player_inventory.setup(self)
@@ -120,3 +121,56 @@ func _close_inventories() -> void:
 func _claim_quickbar() -> void:
 	quickbar.get_parent().remove_child(quickbar)
 	quickbar_container.add_child(quickbar)
+
+
+## Returns an array of inventory slots containing a held item that has
+## the type that matches the provided type from the player inventory and quick-bar.
+func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
+	var existing_stacks: Array[InventorySlot] = (
+		quickbar.find_slots_with(item_type)
+		+ player_inventory.find_slots_with(item_type)
+	)
+
+	return existing_stacks
+
+
+## Tries to add the blueprint to the inventory, starting with existing item
+## stacks and then to an empty panel in the quickbar, then in the main inventory.
+## Returns true if it succeeds.
+func add_to_inventory(item: BlueprintEntity) -> bool:
+	# This is temporary for testing! We'll replace this shortly.
+	return false
+
+
+## Tries to add the ground item detected by the player collision into the player's
+## inventory and trigger the animation for it.
+func _on_player_entered_pickup_area(item: GroundEntity, player: CharacterBody2D) -> void:
+	if not (item and item.blueprint):
+		return
+
+	# We get the current amount inside the stack. It's possible for there to be
+	# no space for the entire stack, but we could still pick up parts of the stack.
+	var amount: int = item.blueprint.stack_count
+
+	# Attempts to add the item to existing stacks and available space.
+	if add_to_inventory(item.blueprint):
+		# If we succeed, we play the `do_pickup()` animation, disable collision, etc.
+		item.do_pickup(player)
+	else:
+		# If the attempt failed, we calculate if the stack is smaller than it
+		# used to be before we tried picking it up.
+		if item.blueprint.stack_count < amount:
+			# If so, we need to create a new duplicate ground item whose job is to animate
+			# itself flying to the player.
+			var new_item: GroundEntity = item.duplicate()
+
+			# We need to use `call_deferred` to delay the new item by a frame because
+			# we disable the shape's collision so it can't be picked up twice.
+			#
+			# As the physics engine is currently busy dealing with the collision
+			# with the player's area and Godot doesn't allow us to change
+			# collision states when its physics engine is busy, we need to wait
+			# so it won't complain or cause errors.
+			item.get_parent().call_deferred("add_child", new_item)
+			new_item.call_deferred("setup", item.blueprint)
+			new_item.call_deferred("do_pickup", player)
