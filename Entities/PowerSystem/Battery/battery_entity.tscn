@@ -12,7 +12,7 @@ resource_local_to_scene = true
 shader = ExtResource("5_horsm")
 shader_parameter/amount = 0.0
 
-[node name="BatteryEntity" type="Area2D" groups=["power_receivers", "power_sources"]]
+[node name="BatteryEntity" type="StaticBody2D" groups=["power_receivers", "power_sources"]]
 script = ExtResource("1_ik67y")
 type = 1
 

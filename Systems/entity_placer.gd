@@ -13,6 +13,9 @@ const POSITION_OFFSET: Vector2 = Vector2(0, 25)
 ## Base time in seconds it takes to deconstruct an item.
 const DECONSTRUCT_TIME: float = 0.3
 
+## The ground item packed scene we instance when dropping items
+var GroundItemScene: PackedScene = preload("res://Entities/ground_entity.tscn")
+
 ## Reference for gui to access the mouse's inventory
 var _gui: Control
 
@@ -34,6 +37,7 @@ var _player: Player
 ## The variable below keeps track of the current deconstruction target cell. If the mouse moves
 ## to another cell, we can abort the operation by checking against this value.
 var _current_deconstruct_location: Vector2i = Vector2i.ZERO
+
 
 @onready var _deconstruct_timer: Timer = %DesconstructTimer
 
@@ -133,8 +137,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	# drop the entity as a dropable entity that the player can pick up.
 	# For testing purposes, the following code clears the blueprint from the active slot instead.
 	elif event.is_action_pressed("drop") and _gui.blueprint:
-		remove_child(_gui.blueprint)
-		_gui.blueprint = null
+		if is_on_ground:
+			_drop_entity(_gui.blueprint, global_mouse_position)
+			_gui.blueprint = null
 	## Rotate the blueprint's power indicator if it has one
 	elif event.is_action_pressed("rotate_blueprint") and _gui.blueprint:
 		_gui.blueprint.rotate_blueprint()
@@ -270,9 +275,25 @@ func _deconstruct(event_position: Vector2, cellv: Vector2i) -> void:
 func _finish_deconstruct(cellv: Vector2i) -> void:
 	# This function will drop the deconstructed entity as a pickup item,
 	# but we haven't implemented an inventory yet, so we only remove the entity.
-	#var entity: Entity = _tracker.get_entity_at(cellv)
+	var entity: Entity = _tracker.get_entity_at(cellv)
 	_tracker.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)
+
+	# We convert the map position to a global position.
+	var location: Vector2 = map_to_local(cellv)
+	# If we do have a blueprint, we get it as a packed scene.
+	if Library.blueprints.has(entity.type):
+		var Blueprint: PackedScene = Library.blueprints[entity.type]
+		_drop_entity(Blueprint.instantiate(), location)
+
+
+## Creates a new ground item with the given blueprint and sets it up at the
+## deconstructed entity's location.
+func _drop_entity(entity: BlueprintEntity, location: Vector2) -> void:
+	# We instance a new ground item, add it, and set it up
+	var ground_item: = GroundItemScene.instantiate()
+	add_child(ground_item)
+	ground_item.setup(entity, location)
 
 
 func _abort_deconstruct() -> void:
