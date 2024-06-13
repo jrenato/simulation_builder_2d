@@ -21,13 +21,6 @@ func setup(_gui: Control) -> void:
 	for bar in inventories:
 		bar.setup(gui)
 
-	var engine: BlueprintEntity = Library.blueprints[Library.TYPE.STIRLING].instantiate()
-	engine.stack_count = 4
-	var battery: BlueprintEntity = Library.blueprints[Library.TYPE.BATTERY].instantiate()
-	battery.stack_count = 4
-	inventories[0].slots[0].held_item = engine
-	inventories[0].slots[1].held_item = battery
-
 
 ## Removes the provided quickbar from its current parent and makes it a sibling
 ## of the other inventory bars.

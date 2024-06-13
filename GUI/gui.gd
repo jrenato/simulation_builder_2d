@@ -15,6 +15,9 @@ const QUICKBAR_ACTIONS := [
 	"quickbar_0"
 ]
 
+## Prefills the player inventory with objects from this dictionary
+@export var debug_items: Array[DebugItem] = []
+
 ## A reference to the inventory that belongs to the 'mouse'. It is a property
 ## that gives indirect access to DragPreview's blueprint through its getter
 ## function. No one needs to know that it is stored outside of the GUI class.
@@ -40,7 +43,24 @@ func _ready() -> void:
 	# We'll define `InventoryWindow.setup()` in the next lesson.
 	player_inventory.setup(self)
 	quickbar.setup(self)
+	add_debug_items()
 	_close_inventories()
+
+
+func add_debug_items() -> void:
+	# ----- Debug system -----
+	# We loop over all the keys in the `debug_items` dictionary and ensure they exist in the `Library`.
+	for debug_item in debug_items:
+		if not Library.blueprints.has(debug_item.type):
+			continue
+
+		# If so, we instantiate the item and set its stack count to the value dictionary's value.
+		var item_instance: Node = Library.blueprints[debug_item.type].instantiate()
+		item_instance.stack_count = min(item_instance.stack_size, debug_item.amount)
+
+		# We then try to add it to the inventory and if it's full, we free the leftover blueprint.
+		if not add_to_inventory(item_instance):
+			item_instance.queue_free()
 
 
 func _process(delta: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dglnlp8l7cwvc"]
+[gd_scene load_steps=12 format=3 uid="uid://dglnlp8l7cwvc"]
 
 [ext_resource type="Script" path="res://Systems/simulation.gd" id="1_q45le"]
 [ext_resource type="TileSet" uid="uid://cgxr4kr0mbhgb" path="res://Resources/tileset.tres" id="2_er2vg"]
@@ -7,7 +7,18 @@
 [ext_resource type="PackedScene" uid="uid://crxnjqw7urxn6" path="res://GUI/gui.tscn" id="3_31l27"]
 [ext_resource type="TileSet" uid="uid://ctwfcf83ekn8p" path="res://Resources/entities_tilemap.tres" id="3_703hk"]
 [ext_resource type="Script" path="res://Systems/entity_placer.gd" id="3_wjn7w"]
+[ext_resource type="Script" path="res://Resources/debug_item.gd" id="4_uaa3k"]
 [ext_resource type="PackedScene" uid="uid://cibp3f8d7e52s" path="res://Entities/Common/Branches/branches_entity.tscn" id="7_a7phf"]
+
+[sub_resource type="Resource" id="Resource_xjww2"]
+script = ExtResource("4_uaa3k")
+type = 0
+amount = 4
+
+[sub_resource type="Resource" id="Resource_fj7dj"]
+script = ExtResource("4_uaa3k")
+type = 1
+amount = 4
 
 [node name="Simulation" type="Node"]
 script = ExtResource("1_q45le")
@@ -17,6 +28,7 @@ tile_label_scene = ExtResource("2_x6hjd")
 
 [node name="GUI" parent="CanvasLayer" instance=ExtResource("3_31l27")]
 unique_name_in_owner = true
+debug_items = Array[ExtResource("4_uaa3k")]([SubResource("Resource_xjww2"), SubResource("Resource_fj7dj")])
 
 [node name="SystemsTimer" type="Timer" parent="."]
 unique_name_in_owner = true
