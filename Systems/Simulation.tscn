@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dglnlp8l7cwvc"]
+[gd_scene load_steps=9 format=3 uid="uid://dglnlp8l7cwvc"]
 
 [ext_resource type="Script" path="res://Systems/simulation.gd" id="1_q45le"]
 [ext_resource type="TileSet" uid="uid://cgxr4kr0mbhgb" path="res://Resources/tileset.tres" id="2_er2vg"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://crxnjqw7urxn6" path="res://GUI/gui.tscn" id="3_31l27"]
 [ext_resource type="TileSet" uid="uid://ctwfcf83ekn8p" path="res://Resources/entities_tilemap.tres" id="3_703hk"]
 [ext_resource type="Script" path="res://Systems/entity_placer.gd" id="3_wjn7w"]
+[ext_resource type="PackedScene" uid="uid://cibp3f8d7e52s" path="res://Entities/Common/Branches/branches_entity.tscn" id="7_a7phf"]
 
 [node name="Simulation" type="Node"]
 script = ExtResource("1_q45le")
@@ -53,6 +54,15 @@ script = ExtResource("3_wjn7w")
 
 [node name="DesconstructTimer" type="Timer" parent="GameWorld/YSort/EntityPlacer"]
 unique_name_in_owner = true
+
+[node name="BranchesEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("7_a7phf")]
+position = Vector2(-200, -53)
+
+[node name="BranchesEntity2" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("7_a7phf")]
+position = Vector2(0, -150)
+
+[node name="BranchesEntity3" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("7_a7phf")]
+position = Vector2(302, -53)
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
 unique_name_in_owner = true
