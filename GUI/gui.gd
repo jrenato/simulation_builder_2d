@@ -138,8 +138,14 @@ func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
 ## stacks and then to an empty panel in the quickbar, then in the main inventory.
 ## Returns true if it succeeds.
 func add_to_inventory(item: BlueprintEntity) -> bool:
-	# This is temporary for testing! We'll replace this shortly.
-	return false
+	# If the item is already in the scene tree, remove it first.
+	if item.get_parent() != null:
+		item.get_parent().remove_child(item)
+
+	if quickbar.add_to_first_available_inventory(item):
+		return true
+
+	return player_inventory.add_to_first_available_inventory(item)
 
 
 ## Tries to add the ground item detected by the player collision into the player's

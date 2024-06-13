@@ -46,6 +46,16 @@ func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
 	return output
 
 
+## Adds the provided item to the first available space it can find in the
+## inventory bars. Returns true if it succeeds.
+func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
+	for inventory in inventories:
+		if inventory.add_to_first_available_inventory(item):
+			return true
+	
+	return false
+
+
 ## Whenever we receive the `inventory_changed` signal, bubble up the signal from the inventory bars.
 func _on_inventory_bar_inventory_changed(slot: InventorySlot, held_item: BlueprintEntity) -> void:
 	inventory_changed.emit(slot, held_item)

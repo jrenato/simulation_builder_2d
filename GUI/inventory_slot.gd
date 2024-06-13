@@ -56,14 +56,14 @@ func _set_held_item(value: BlueprintEntity) -> void:
 		held_item.display_as_inventory_icon()
 
 	# We update the stack count label.
-	_update_label()
+	update_label()
 	# And we notify any subscribers that we've changed what item is in this slot.
 	held_item_changed.emit(self, held_item)
 
 
 ## Updates the label with the stack's current amount.
 # If it's only 1 or there is no item, we hide the label.
-func _update_label() -> void:
+func update_label() -> void:
 	var can_be_stacked: bool = is_instance_valid(held_item) and held_item.stack_count > 1
 
 	if can_be_stacked:
@@ -167,7 +167,7 @@ func _stack_items(split: bool = false) -> void:
 	# Finally, we increase the held item's stack count by the calculated `count` and update
 	# the label.
 	held_item.stack_count += count
-	_update_label()
+	update_label()
 
 
 ## Takes the current held item's stack and swaps it with the mouse's.
@@ -222,7 +222,7 @@ func _split_items() -> void:
 
 	# Finally, we give the mouse the new stack and update the label.
 	gui.blueprint = new_stack
-	_update_label()
+	update_label()
 
 
 ## Splits the mouse's inventory stack and takes half of it into this item slot.
