@@ -7,6 +7,10 @@ class_name BlueprintEntity extends Node2D
 @export var type: Library.TYPE
 ## How many items can be in a stack of the given blueprint type.
 @export var stack_size: int = 1
+## Provides a field for information about the blueprint item.
+## What it is and what it is used for.
+@export_multiline var description: String = ""
+
 
 ## How many items are actually in the stack of the current stack.
 var stack_count: int = 1

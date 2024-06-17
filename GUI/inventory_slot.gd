@@ -80,11 +80,17 @@ func _gui_input(event: InputEvent) -> void:
 	var left_click: bool = event.is_action_pressed("left_click")
 	var right_click: bool = event.is_action_pressed("right_click")
 
-	if not (left_click or right_click):
-		return
+	if left_click or right_click:
+		handle_mouse_click(left_click, right_click)
+	elif event is InputEventMouseMotion:
+		if is_instance_valid(held_item):
+			Events.hovered_over_entity.emit(held_item)
+		else:
+			Events.hovered_over_entity.emit(null)
 
+
+func handle_mouse_click(left_click: bool, right_click: bool) -> void:
 	# We have three main cases to handle below:
-	#
 	# 1. The mouse is holding an item and the inventory slot has an item.
 	# 2. The mouse is holding an item and the inventory slot is empty.
 	# 3. The mouse is not holding an item and the inventory has one.

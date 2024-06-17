@@ -63,8 +63,10 @@ func _set_stored_power(value: float) -> void:
 ## Sets the stored power using the setter based on the received amount of power per second.
 func _on_power_receiver_power_received(amount: float, delta: float) -> void:
 	stored_power = stored_power + amount * delta
+	Events.info_updated.emit(self)
 
 
 ## Sets the stored power using the setter based on the amount of power provided per second.
 func _on_power_source_power_updated(power_draw: float, delta: float) -> void:
 	stored_power = stored_power - min(power_draw, power_source.get_effective_power()) * delta
+	Events.info_updated.emit(self)

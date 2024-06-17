@@ -24,4 +24,10 @@ func _ready() -> void:
 	# We also animate the color of the `shaft` to enhance the animation, going from white to green.
 	tween.tween_property(piston_shaft, "modulate", Color(0.5, 1.0, 0.5), BOOTUP_TIME)
 	tween.set_parallel()
-	tween.tween_property(power_source, "efficiency", 1.0, BOOTUP_TIME)
+	#tween.tween_property(power_source, "efficiency", 1.0, BOOTUP_TIME)
+	tween.tween_method(_update_efficiency, 0.0, 1.0, BOOTUP_TIME)
+
+
+func _update_efficiency(value: float) -> void:
+	power_source.efficiency = value
+	Events.info_updated.emit(self)
