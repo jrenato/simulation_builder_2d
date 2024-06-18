@@ -28,6 +28,12 @@ func _ready() -> void:
 	tween.tween_method(_update_efficiency, 0.0, 1.0, BOOTUP_TIME)
 
 
+## Provides the current amount of power being output by the engine.
+func get_info() -> String:
+	# We format the power as a number with one decimal.
+	return "%.1f j/s" % power_source.get_effective_power()
+
+
 func _update_efficiency(value: float) -> void:
 	power_source.efficiency = value
 	Events.info_updated.emit(self)

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfd4ndkbm5ate"]
+
+[ext_resource type="Script" path="res://GUI/info_gui.gd" id="1_h0sjc"]
+
+[node name="InfoGUI" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("1_h0sjc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2

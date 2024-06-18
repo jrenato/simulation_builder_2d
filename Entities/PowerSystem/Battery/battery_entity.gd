@@ -60,6 +60,14 @@ func _set_stored_power(value: float) -> void:
 	indicator_sprite.material.set_shader_parameter("amount", stored_power / max_storage)
 
 
+## Provides the amount of power relative to the max amount of power.
+func get_info() -> String:
+	# Uses Godot's string formatting syntax to pad four characters to the right,
+	# and display one decimal number.
+	# The "j" below stands for joules, an internal unit to measure energy.
+	return "Storing %-4.1f/%s j" % [stored_power, max_storage]
+
+
 ## Sets the stored power using the setter based on the received amount of power per second.
 func _on_power_receiver_power_received(amount: float, delta: float) -> void:
 	stored_power = stored_power + amount * delta

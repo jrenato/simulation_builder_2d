@@ -5,6 +5,7 @@
 
 [node name="WireEntity" type="Node2D" groups=["power_movers"]]
 script = ExtResource("1_vljof")
+entity_name = "Wire"
 type = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

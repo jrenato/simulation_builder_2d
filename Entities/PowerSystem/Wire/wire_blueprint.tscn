@@ -7,6 +7,7 @@
 script = ExtResource("1_610h2")
 type = 2
 stack_size = 50
+description = "Transmits energy between connected devices"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

@@ -8,6 +8,7 @@
 script = ExtResource("1_pxwmd")
 type = 1
 stack_size = 8
+description = "Stores and provides energy"
 
 [node name="PowerDirection" parent="." instance=ExtResource("2_4fukd")]
 position = Vector2(0, -5)
