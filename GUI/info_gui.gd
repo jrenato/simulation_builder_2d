@@ -107,7 +107,7 @@ func _on_hovered_over_recipe(output: String, recipe: Recipe) -> void:
 	for input in recipe.inputs:
 		# We add a few spaces to make it prettier, and use the `capitalize()`
 		# function to make sure any compound names are spaced out
-		label.text += "\n    %sx %s" % [input.amount, Library.entity_names[input.type]]
+		label.text += "\n  - %sx %s" % [input.amount, Library.entity_names[input.type]]
 
 	# Force-reset the size of the container around the label
 	set_deferred("rect_size", Vector2.ZERO)

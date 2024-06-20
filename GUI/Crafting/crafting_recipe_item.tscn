@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxfayn1brgr2l"]
+[gd_scene load_steps=7 format=3 uid="uid://cxfayn1brgr2l"]
 
 [ext_resource type="Theme" path="res://Assets/Theme/builder_theme.tres" id="1_irfhd"]
 [ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="1_lrhwa"]
 [ext_resource type="Script" path="res://GUI/Crafting/crafting_recipe_item.gd" id="2_3txls"]
+[ext_resource type="StyleBox" path="res://Assets/Theme/Panel/inventory_panel_style.tres" id="3_ki1f8"]
+[ext_resource type="StyleBox" path="res://Assets/Theme/Panel/inventory_panel_light_style.tres" id="4_v1n7g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dp0cy"]
 atlas = ExtResource("1_lrhwa")
@@ -14,6 +16,8 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_irfhd")
 script = ExtResource("2_3txls")
+regular_style = ExtResource("3_ki1f8")
+highlight_style = ExtResource("4_v1n7g")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

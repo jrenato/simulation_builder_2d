@@ -1,4 +1,4 @@
-extends MarginContainer
+class_name Inventory extends MarginContainer
 
 ## We use this signal to notify the GUI system that the inventory has changed.
 signal inventory_changed(slot: InventorySlot, held_item: BlueprintEntity)

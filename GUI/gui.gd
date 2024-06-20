@@ -28,23 +28,26 @@ var blueprint: BlueprintEntity:
 ## If `true`, it means the mouse is over the `GUI` at the moment.
 var mouse_in_gui: bool = false
 
-@onready var player_inventory: MarginContainer = %InventoryWindow
 ## We use the reference to the drag preview in the setter and getter functions.
-@onready var is_open: bool = player_inventory.visible
 @onready var _drag_preview: Control = %DragPreview
 @onready var _inventory_container: HBoxContainer = %InventoryContainer
+@onready var _quickbar_container: PanelContainer = %QuickBarContainer
+@onready var inventory: Inventory = %InventoryWindow
 @onready var quickbar: QuickBar = %QuickBar
-@onready var quickbar_container: PanelContainer = %QuickBarContainer
-@onready var crafting_window: MarginContainer = %CraftingGUI
+@onready var crafting: Crafting = %CraftingGUI
+
+@onready var is_open: bool = inventory.visible
 
 
 func _ready() -> void:
 	Events.entered_pickup_area.connect(_on_player_entered_pickup_area)
+	inventory.inventory_changed.connect(_on_inventory_changed)
+	quickbar.inventory_changed.connect(_on_inventory_changed)
 	# Here, we'll set up any GUI systems that require knowledge of the GUI node.
 	# We'll define `InventoryWindow.setup()` in the next lesson.
-	player_inventory.setup(self)
+	inventory.setup(self)
 	quickbar.setup(self)
-	crafting_window.setup(self)
+	crafting.setup(self)
 	add_debug_items()
 	_close_inventories()
 
@@ -69,7 +72,7 @@ func _process(delta: float) -> void:
 	var mouse_position: Vector2 = get_global_mouse_position()
 	# If the mouse is inside the GUI rect and the GUI is open, set it true.
 	var mouse_in_inventory: bool = is_open and _inventory_container.get_rect().has_point(mouse_position)
-	var mouse_in_quickbar: bool = quickbar_container.get_rect().has_point(mouse_position)
+	var mouse_in_quickbar: bool = _quickbar_container.get_rect().has_point(mouse_position)
 	mouse_in_gui = mouse_in_inventory or mouse_in_quickbar
 
 
@@ -143,25 +146,25 @@ func _get_blueprint() -> BlueprintEntity:
 ## Shows the inventory window, crafting window
 func _open_inventories() -> void:
 	is_open = true
-	player_inventory.visible = true
-	player_inventory.claim_quickbar(quickbar)
-	crafting_window.visible = true
-	crafting_window.update_recipes()
+	inventory.visible = true
+	inventory.claim_quickbar(quickbar)
+	crafting.visible = true
+	crafting.update_recipes()
 
 
 ## Hides the inventory window, crafting window, and any currently open machine GUI
 func _close_inventories() -> void:
 	is_open = false
-	player_inventory.visible = false
+	inventory.visible = false
 	_claim_quickbar()
-	crafting_window.visible = false
+	crafting.visible = false
 
 
 ## Removes the quickbar from its current parent and puts it back under the
 ## quickbar's margin container
 func _claim_quickbar() -> void:
 	quickbar.get_parent().remove_child(quickbar)
-	quickbar_container.add_child(quickbar)
+	_quickbar_container.add_child(quickbar)
 
 
 ## Returns an array of inventory slots containing a held item that has
@@ -169,7 +172,7 @@ func _claim_quickbar() -> void:
 func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
 	var existing_stacks: Array[InventorySlot] = (
 		quickbar.find_slots_with(item_type)
-		+ player_inventory.find_slots_with(item_type)
+		+ inventory.find_slots_with(item_type)
 	)
 
 	return existing_stacks
@@ -186,7 +189,7 @@ func add_to_inventory(item: BlueprintEntity) -> bool:
 	if quickbar.add_to_first_available_inventory(item):
 		return true
 
-	return player_inventory.add_to_first_available_inventory(item)
+	return inventory.add_to_first_available_inventory(item)
 
 
 ## Tries to add the ground item detected by the player collision into the player's
@@ -221,3 +224,7 @@ func _on_player_entered_pickup_area(item: GroundEntity, player: CharacterBody2D)
 			item.get_parent().call_deferred("add_child", new_item)
 			new_item.call_deferred("setup", item.blueprint)
 			new_item.call_deferred("do_pickup", player)
+
+
+func _on_inventory_changed(slot: InventorySlot, held_item: BlueprintEntity) -> void:
+	crafting.update_recipes()

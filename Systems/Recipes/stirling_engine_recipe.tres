@@ -5,16 +5,16 @@
 
 [sub_resource type="Resource" id="Resource_ly5a2"]
 script = ExtResource("1_310tk")
-input_key = 4
+type = 4
 amount = 8
 
 [sub_resource type="Resource" id="Resource_eq1lw"]
 script = ExtResource("1_310tk")
-input_key = 2
+type = 2
 amount = 3
 
 [resource]
 script = ExtResource("2_dkgat")
 inputs = Array[ExtResource("1_310tk")]([SubResource("Resource_ly5a2"), SubResource("Resource_eq1lw")])
 output_type = 0
-output_amount = 1
+amount = 1
