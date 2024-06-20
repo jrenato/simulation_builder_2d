@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://crxnjqw7urxn6"]
+[gd_scene load_steps=9 format=3 uid="uid://crxnjqw7urxn6"]
 
 [ext_resource type="Theme" path="res://Assets/Theme/builder_theme.tres" id="1_0ppcf"]
 [ext_resource type="PackedScene" uid="uid://bflfhkpqspaag" path="res://GUI/inventory_window.tscn" id="2_2r3so"]
 [ext_resource type="Script" path="res://GUI/gui.gd" id="2_khc5l"]
+[ext_resource type="PackedScene" uid="uid://crjnr1483n23h" path="res://GUI/Crafting/crafting_gui.tscn" id="3_ahoji"]
 [ext_resource type="PackedScene" uid="uid://caeitvne1dvun" path="res://GUI/drag_preview.tscn" id="3_s66n5"]
 [ext_resource type="PackedScene" uid="uid://cfwnk0yc8pc6a" path="res://GUI/quick_bar.tscn" id="5_6c3s7"]
 [ext_resource type="PackedScene" uid="uid://dfd4ndkbm5ate" path="res://GUI/info_gui.tscn" id="6_y8i70"]
@@ -23,6 +24,11 @@ script = ExtResource("2_khc5l")
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
+
+[node name="CraftingGUI" parent="InventoryContainer" instance=ExtResource("3_ahoji")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
 
 [node name="InventoryWindow" parent="InventoryContainer" instance=ExtResource("2_2r3so")]
 unique_name_in_owner = true

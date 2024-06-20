@@ -35,6 +35,7 @@ var mouse_in_gui: bool = false
 @onready var _inventory_container: HBoxContainer = %InventoryContainer
 @onready var quickbar: QuickBar = %QuickBar
 @onready var quickbar_container: PanelContainer = %QuickBarContainer
+@onready var crafting_window: MarginContainer = %CraftingGUI
 
 
 func _ready() -> void:
@@ -43,6 +44,7 @@ func _ready() -> void:
 	# We'll define `InventoryWindow.setup()` in the next lesson.
 	player_inventory.setup(self)
 	quickbar.setup(self)
+	crafting_window.setup(self)
 	add_debug_items()
 	_close_inventories()
 
@@ -110,6 +112,22 @@ func update_label() -> void:
 	_drag_preview.update_label()
 
 
+## Checks the player's inventory and compares the total count of items with
+## a given `item_id`.
+## Returns `true` if it's equal or greater than the specified `amount`.
+func is_in_inventory(item_type: Library.TYPE, amount: int) -> bool:
+	# Get all panels that have the given item by name.
+	var existing_stacks: Array[InventorySlot] = find_slots_with(item_type)
+	if existing_stacks.is_empty():
+		return false
+
+	# If we have them, iterate over each one and total them up.
+	var total := 0
+	for stack in existing_stacks:
+		total += stack.held_item.stack_count
+	return total >= amount
+
+
 ## Setter that forwards setting the blueprint to `DragPreview.blueprint`.
 func _set_blueprint(value: BlueprintEntity) -> void:
 	if not is_inside_tree():
@@ -127,6 +145,8 @@ func _open_inventories() -> void:
 	is_open = true
 	player_inventory.visible = true
 	player_inventory.claim_quickbar(quickbar)
+	crafting_window.visible = true
+	crafting_window.update_recipes()
 
 
 ## Hides the inventory window, crafting window, and any currently open machine GUI
@@ -134,6 +154,7 @@ func _close_inventories() -> void:
 	is_open = false
 	player_inventory.visible = false
 	_claim_quickbar()
+	crafting_window.visible = false
 
 
 ## Removes the quickbar from its current parent and puts it back under the

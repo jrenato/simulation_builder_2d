@@ -1,17 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxfayn1brgr2l"]
+[gd_scene load_steps=5 format=3 uid="uid://cxfayn1brgr2l"]
 
 [ext_resource type="Theme" path="res://Assets/Theme/builder_theme.tres" id="1_irfhd"]
 [ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="1_lrhwa"]
+[ext_resource type="Script" path="res://GUI/Crafting/crafting_recipe_item.gd" id="2_3txls"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dp0cy"]
 atlas = ExtResource("1_lrhwa")
 region = Rect2(339, 119, 102, 82)
 filter_clip = true
 
-[node name="CraftingRecipe" type="PanelContainer"]
+[node name="CraftingRecipeItem" type="PanelContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_irfhd")
+script = ExtResource("2_3txls")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -25,6 +27,7 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 mouse_filter = 2
@@ -33,6 +36,7 @@ expand_mode = 2
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_irfhd")
 text = "Battery"

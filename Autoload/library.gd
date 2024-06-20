@@ -37,7 +37,7 @@ var blueprints: Dictionary = {
 
 ## The dictionary holds recipes keyed to their types.
 var recipes: Dictionary = {
-	TYPE.STIRLING: "res://Systems/Recipes/stirling_engine_recipe.tres",
-	TYPE.BATTERY: "res://Systems/Recipes/battery_recipe.tres",
-	TYPE.WIRE: "res://Systems/Recipes/wire_recipe.tres",
+	TYPE.STIRLING: load("res://Systems/Recipes/stirling_engine_recipe.tres"),
+	TYPE.BATTERY: load("res://Systems/Recipes/battery_recipe.tres"),
+	TYPE.WIRE: load("res://Systems/Recipes/wire_recipe.tres"),
 }

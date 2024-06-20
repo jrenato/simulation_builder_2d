@@ -17,5 +17,8 @@ signal entered_pickup_area(entity: Entity, player: Player)
 ## Emitted when the mouse hovers over any entity.
 signal hovered_over_entity(entity: Entity)
 
+## Emitted when the mouse hovers over a recipe item.
+signal hovered_over_recipe(output: String, recipe: Recipe)
+
 ## Emitted when an entity updates its tooltip.
 signal info_updated(entity: Entity)

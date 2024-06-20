@@ -22,7 +22,9 @@ func _ready() -> void:
 	_entity_placer.setup(_gui, _tracker, _ground, _flat_entities, _player)
 	_systems_timer.start(simulation_speed)
 	hide_barrier_layer()
-	print(_power_system)
+
+	if _power_system:
+		print("Power System enabled")
 	#numerate_ground()
 
 
