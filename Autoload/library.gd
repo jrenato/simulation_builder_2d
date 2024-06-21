@@ -25,6 +25,8 @@ var entity_names: Dictionary = {
 	TYPE.CRUDE_AXE: "Crude Axe",
 	TYPE.PICKAXE: "Pickaxe",
 	TYPE.CRUDE_PICKAXE: "Crude Pickaxe",
+	TYPE.BOULDER: "Boulder",
+	TYPE.STONE: "Stone",
 }
 
 ## This dictionary holds the entities keyed to their types.
@@ -33,6 +35,7 @@ var entities: Dictionary = {
 	TYPE.BATTERY: load("res://Entities/PowerSystem/Battery/battery_entity.tscn"),
 	TYPE.WIRE: load("res://Entities/PowerSystem/Wire/wire_entity.tscn"),
 	TYPE.BRANCH: load("res://Entities/Common/Branch/branch_entity.tscn"),
+	TYPE.STONE: load("res://Entities/Common/Stone/stone_entity.tscn"),
 }
 
 ## The dictionary holds blueprints keyed to their types.
@@ -41,6 +44,7 @@ var blueprints: Dictionary = {
 	TYPE.BATTERY: load("res://Entities/PowerSystem/Battery/battery_blueprint.tscn"),
 	TYPE.WIRE: load("res://Entities/PowerSystem/Wire/wire_blueprint.tscn"),
 	TYPE.BRANCH: load("res://Entities/Common/Branch/branch_blueprint.tscn"),
+	TYPE.STONE: load("res://Entities/Common/Stone/stone_blueprint.tscn"),
 	TYPE.INGOT: load("res://Entities/Common/ingot_blueprint.tscn"),
 	TYPE.AXE: load("res://Entities/Tools/axe_blueprint.tscn"),
 	TYPE.CRUDE_AXE: load("res://Entities/Tools/crude_axe_blueprint.tscn"),
@@ -53,4 +57,9 @@ var recipes: Dictionary = {
 	TYPE.STIRLING: load("res://Systems/Recipes/stirling_engine_recipe.tres"),
 	TYPE.BATTERY: load("res://Systems/Recipes/battery_recipe.tres"),
 	TYPE.WIRE: load("res://Systems/Recipes/wire_recipe.tres"),
+}
+
+## A dictionary to override what an entity drops instead of a blueprint of itself
+var drops: Dictionary = {
+	TYPE.BOULDER: TYPE.STONE, # When desconstructed, a BOULDER should drop STONES
 }

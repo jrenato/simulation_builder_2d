@@ -288,18 +288,37 @@ func _update_neighboring_flat_entities(cellv: Vector2i) -> void:
 
 ## Begin the deconstruction process at the current cell
 func _deconstruct(event_position: Vector2, cellv: Vector2i) -> void:
+	# Get the blueprint in the player's hand currently.
+	var blueprint_in_hand: BlueprintEntity = _gui.blueprint
+
+	# Check the entity we're trying to deconstruct.
+	var entity: Entity = _tracker.get_entity_at(cellv)
+
+	# If it has a deconstruct filter property, and the blueprint we're holding
+	# in our hand is part of the filter, then we can proceed. Otherwise, return
+	# so we don't deconstruct it.
+	if not entity.deconstruct_filter.is_empty():
+		if not blueprint_in_hand:
+			return
+		if not blueprint_in_hand.type in entity.deconstruct_filter:
+			return
+
+
 	# We connect to the timer's `timeout` signal. We pass in the targeted tile as a
 	# bind argument and make sure that the signal disconnects after emitting once
 	# using the CONNECT_ONESHOT flag. This is because once the signal has triggered,
 	# we do not want to have to disconnect manually. Once the timer ends, the deconstruct
 	# operation ends.
-		
+
 	# We call the `_finish_deconstruct()` function when the timer times out. We'll code it next.
 	_deconstruct_timer.timeout.connect(_finish_deconstruct.bind(cellv), CONNECT_ONE_SHOT)
 
+	# Set a modifier if it's a tool, otherwise keep the standard modifier
+	var modifier: float = 1.0 if not blueprint_in_hand is ToolEntity else 1.0 / blueprint_in_hand.tool_speed
+
 	# We then start the timer and store the cell we're targeting, which allows us to cancel
 	# the operation if the player's mouse moves to another cell.
-	_deconstruct_timer.start(DECONSTRUCT_TIME)
+	_deconstruct_timer.start(DECONSTRUCT_TIME * modifier)
 	_current_deconstruct_location = cellv
 
 
@@ -313,10 +332,17 @@ func _finish_deconstruct(cellv: Vector2i) -> void:
 
 	# We convert the map position to a global position.
 	var location: Vector2 = map_to_local(cellv)
-	# If we do have a blueprint, we get it as a packed scene.
-	if Library.blueprints.has(entity.type):
-		var blueprint: PackedScene = Library.blueprints[entity.type]
-		_drop_entity(blueprint.instantiate(), location)
+	var blueprint: PackedScene = null
+	if Library.drops.has(entity.type):
+		# If we do have a drop override, we get it as a packed scene.
+		blueprint = Library.blueprints[Library.drops[entity.type]]
+	elif Library.blueprints.has(entity.type):
+		# If we do have a blueprint, we get it as a packed scene.
+		blueprint = Library.blueprints[entity.type]
+
+	if blueprint:
+		for _i in entity.pickup_count:
+			_drop_entity(blueprint.instantiate(), location)
 
 
 ## Creates a new ground item with the given blueprint and sets it up at the

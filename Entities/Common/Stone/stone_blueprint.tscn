@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2wlaaorlr6l3"]
+
+[ext_resource type="Script" path="res://Entities/blueprint_entity.gd" id="1_fp23h"]
+[ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_hmv50"]
+
+[node name="BranchesBlueprint" type="Node2D"]
+script = ExtResource("1_fp23h")
+placeable = false
+type = 3
+stack_size = 100
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+texture = ExtResource("2_hmv50")
+region_enabled = true
+region_rect = Rect2(672, 119, 96, 70)

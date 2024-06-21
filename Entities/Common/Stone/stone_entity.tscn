@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dropm4lwmscq"]
+
+[ext_resource type="Script" path="res://Entities/Common/Branch/branch_entity.gd" id="1_5odms"]
+[ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="2_2k7al"]
+
+[node name="BranchesEntity" type="Node2D"]
+script = ExtResource("1_5odms")
+type = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -25)
+texture = ExtResource("2_2k7al")
+region_enabled = true
+region_rect = Rect2(12, 452, 38, 24)
