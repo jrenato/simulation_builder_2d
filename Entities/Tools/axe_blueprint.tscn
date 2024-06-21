@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjpl4f4uqnsum"]
+
+[ext_resource type="Script" path="res://Entities/tool_entity.gd" id="1_143mx"]
+[ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_8dv48"]
+
+[node name="AxeBlueprint" type="Node2D"]
+script = ExtResource("1_143mx")
+placeable = false
+type = 5
+description = "A good quality axe"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8dv48")
+offset = Vector2(0, -25)
+region_enabled = true
+region_rect = Rect2(357, 229, 67, 85)

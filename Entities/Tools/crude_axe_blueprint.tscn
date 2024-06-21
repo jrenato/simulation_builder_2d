@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cywovygjmcvrq"]
+
+[ext_resource type="Script" path="res://Entities/tool_entity.gd" id="1_mkxhw"]
+[ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_pnjcj"]
+
+[node name="CrudeAxeBlueprint" type="Node2D"]
+script = ExtResource("1_mkxhw")
+tool_speed = 0.1
+placeable = false
+type = 6
+description = "A bad quality axe"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_pnjcj")
+offset = Vector2(0, -25)
+region_enabled = true
+region_rect = Rect2(27, 339, 67, 85)

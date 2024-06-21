@@ -12,5 +12,6 @@ description = "Smelted ore"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_gjilp")
+offset = Vector2(0, -5)
 region_enabled = true
 region_rect = Rect2(119, 229, 102, 61)

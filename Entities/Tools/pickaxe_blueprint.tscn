@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcq0m4g121t0"]
+
+[ext_resource type="Script" path="res://Entities/tool_entity.gd" id="1_qcfed"]
+[ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_ghirn"]
+
+[node name="PickaxeBlueprint" type="Node2D"]
+script = ExtResource("1_qcfed")
+placeable = false
+type = 7
+description = "A good quality pickaxe"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ghirn")
+offset = Vector2(0, -25)
+region_enabled = true
+region_rect = Rect2(246, 229, 71, 75)
