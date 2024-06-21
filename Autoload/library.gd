@@ -10,6 +10,8 @@ enum TYPE {
 	CRUDE_AXE,
 	PICKAXE,
 	CRUDE_PICKAXE,
+	BOULDER,
+	STONE,
 }
 
 ## This dictionary holds the names of the entities keyed to their types.
@@ -39,7 +41,7 @@ var blueprints: Dictionary = {
 	TYPE.BATTERY: load("res://Entities/PowerSystem/Battery/battery_blueprint.tscn"),
 	TYPE.WIRE: load("res://Entities/PowerSystem/Wire/wire_blueprint.tscn"),
 	TYPE.BRANCH: load("res://Entities/Common/Branch/branch_blueprint.tscn"),
-	TYPE.INGOT: load("res://Entities/Common/Ingot/ingot_blueprint.tscn"),
+	TYPE.INGOT: load("res://Entities/Common/ingot_blueprint.tscn"),
 	TYPE.AXE: load("res://Entities/Tools/axe_blueprint.tscn"),
 	TYPE.CRUDE_AXE: load("res://Entities/Tools/crude_axe_blueprint.tscn"),
 	TYPE.PICKAXE: load("res://Entities/Tools/pickaxe_blueprint.tscn"),

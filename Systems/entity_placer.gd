@@ -315,8 +315,8 @@ func _finish_deconstruct(cellv: Vector2i) -> void:
 	var location: Vector2 = map_to_local(cellv)
 	# If we do have a blueprint, we get it as a packed scene.
 	if Library.blueprints.has(entity.type):
-		var Blueprint: PackedScene = Library.blueprints[entity.type]
-		_drop_entity(Blueprint.instantiate(), location)
+		var blueprint: PackedScene = Library.blueprints[entity.type]
+		_drop_entity(blueprint.instantiate(), location)
 
 
 ## Creates a new ground item with the given blueprint and sets it up at the
