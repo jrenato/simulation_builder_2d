@@ -4,16 +4,20 @@ enum TYPE {
 	STIRLING,
 	BATTERY,
 	WIRE,
+
 	BRANCH,
+	TREE,
+	LUMBER,
+	BOULDER,
+	STONE,
+	ORE_BOULDER,
+	ORE,
 	INGOT,
+
 	AXE,
 	CRUDE_AXE,
 	PICKAXE,
 	CRUDE_PICKAXE,
-	BOULDER,
-	STONE,
-	LUMBER,
-	TREE,
 }
 
 ## This dictionary holds the names of the entities keyed to their types.
@@ -22,13 +26,14 @@ var entity_names: Dictionary = {
 	TYPE.BATTERY: "Battery",
 	TYPE.WIRE: "Wire",
 
-	TYPE.BOULDER: "Boulder",
-	TYPE.TREE: "Tree",
-
 	TYPE.BRANCH: "Branch",
-	TYPE.INGOT: "Ingot",
-	TYPE.STONE: "Stone",
+	TYPE.TREE: "Tree",
 	TYPE.LUMBER: "Lumber",
+	TYPE.BOULDER: "Boulder",
+	TYPE.STONE: "Stone",
+	TYPE.ORE_BOULDER: "Ore Boulder",
+	TYPE.ORE: "Ore",
+	TYPE.INGOT: "Ingot",
 
 	TYPE.AXE: "Axe",
 	TYPE.CRUDE_AXE: "Crude Axe",
@@ -53,9 +58,10 @@ var blueprints: Dictionary = {
 	TYPE.WIRE: load("res://Entities/PowerSystem/Wire/wire_blueprint.tscn"),
 
 	TYPE.BRANCH: load("res://Entities/Common/Branch/branch_blueprint.tscn"),
-	TYPE.LUMBER: load("res://Entities/Common/lumber_blueprint.tscn"),
+	TYPE.LUMBER: load("res://Entities/Common/Lumber/lumber_blueprint.tscn"),
 	TYPE.STONE: load("res://Entities/Common/Stone/stone_blueprint.tscn"),
-	TYPE.INGOT: load("res://Entities/Common/ingot_blueprint.tscn"),
+	TYPE.ORE: load("res://Entities/Common/Ore/ore_blueprint.tscn"),
+	TYPE.INGOT: load("res://Entities/Common/Ore/ingot_blueprint.tscn"),
 
 	TYPE.AXE: load("res://Entities/Tools/axe_blueprint.tscn"),
 	TYPE.CRUDE_AXE: load("res://Entities/Tools/crude_axe_blueprint.tscn"),

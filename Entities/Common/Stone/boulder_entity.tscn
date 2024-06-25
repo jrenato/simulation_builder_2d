@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://bnqv4fpbmmfhn"]
 
-[ext_resource type="Script" path="res://Entities/Common/boulder_entity.gd" id="1_pqf8i"]
+[ext_resource type="Script" path="res://Entities/Common/Stone/boulder_entity.gd" id="1_pqf8i"]
 [ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="1_wowpb"]
 
 [node name="BoulderEntity" type="StaticBody2D"]
 script = ExtResource("1_pqf8i")
-type = 9
+type = 6
 deconstruct_filter = Array[int]([7, 8])
-drop_type = 10
+drop_type = 7
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

@@ -9,32 +9,32 @@
 [ext_resource type="Script" path="res://Systems/entity_placer.gd" id="3_wjn7w"]
 [ext_resource type="Script" path="res://Resources/debug_item.gd" id="4_uaa3k"]
 [ext_resource type="PackedScene" uid="uid://cibp3f8d7e52s" path="res://Entities/Common/Branch/branch_entity.tscn" id="7_a7phf"]
-[ext_resource type="PackedScene" uid="uid://bnqv4fpbmmfhn" path="res://Entities/Common/boulder_entity.tscn" id="9_1jrme"]
-[ext_resource type="PackedScene" uid="uid://dmqj5tjkhtade" path="res://Entities/Common/tree_entity.tscn" id="10_assuw"]
+[ext_resource type="PackedScene" uid="uid://bnqv4fpbmmfhn" path="res://Entities/Common/Stone/boulder_entity.tscn" id="9_1jrme"]
+[ext_resource type="PackedScene" uid="uid://dmqj5tjkhtade" path="res://Entities/Common/Lumber/tree_entity.tscn" id="10_assuw"]
 
 [sub_resource type="Resource" id="Resource_c7fqs"]
 script = ExtResource("4_uaa3k")
-type = 4
+type = 10
 amount = 10
 
 [sub_resource type="Resource" id="Resource_p5yyv"]
 script = ExtResource("4_uaa3k")
-type = 5
+type = 11
 amount = 1
 
 [sub_resource type="Resource" id="Resource_hspg8"]
 script = ExtResource("4_uaa3k")
-type = 6
+type = 12
 amount = 1
 
 [sub_resource type="Resource" id="Resource_mgavd"]
 script = ExtResource("4_uaa3k")
-type = 7
+type = 13
 amount = 1
 
 [sub_resource type="Resource" id="Resource_krwj5"]
 script = ExtResource("4_uaa3k")
-type = 8
+type = 14
 amount = 1
 
 [node name="Simulation" type="Node"]
@@ -95,9 +95,9 @@ position = Vector2(-95, 48)
 [node name="TreeEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("10_assuw")]
 position = Vector2(198, -152)
 
+[node name="BoulderEntity2" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("9_1jrme")]
+position = Vector2(451, -174)
+
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
 unique_name_in_owner = true
 position = Vector2(50, -29)
-
-[node name="BoulderEntity" parent="GameWorld" instance=ExtResource("9_1jrme")]
-position = Vector2(451, -174)

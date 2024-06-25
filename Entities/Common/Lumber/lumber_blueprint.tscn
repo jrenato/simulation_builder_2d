@@ -6,7 +6,7 @@
 [node name="LumberBlueprint" type="Node2D"]
 script = ExtResource("1_n73r0")
 placeable = false
-type = 11
+type = 5
 stack_size = 25
 description = "Log from a chopped tree"
 

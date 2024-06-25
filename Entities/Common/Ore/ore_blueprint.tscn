@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqmuij63723hm"]
+
+[ext_resource type="Script" path="res://Entities/blueprint_entity.gd" id="1_54ny2"]
+[ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_7r501"]
+
+[node name="OreBlueprint" type="Node2D"]
+script = ExtResource("1_54ny2")
+placeable = false
+type = 9
+stack_size = 100
+description = "Raw, natural metal ore"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+texture = ExtResource("2_7r501")
+region_enabled = true
+region_rect = Rect2(465, 229, 69, 90)
