@@ -23,6 +23,7 @@ var entity_names: Dictionary = {
 	TYPE.WIRE: "Wire",
 
 	TYPE.BOULDER: "Boulder",
+	TYPE.TREE: "Tree",
 
 	TYPE.BRANCH: "Branch",
 	TYPE.INGOT: "Ingot",

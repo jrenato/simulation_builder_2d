@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmqj5tjkhtade"]
+
+[ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="1_6l7h7"]
+[ext_resource type="Script" path="res://Entities/Common/tree_entity.gd" id="1_x7y0q"]
+
+[node name="TreeEntity" type="StaticBody2D"]
+script = ExtResource("1_x7y0q")
+type = 12
+deconstruct_filter = Array[int]([5, 6])
+drop_type = 11
+drop_count = 5
+
+[node name="RootSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("1_6l7h7")
+region_enabled = true
+region_rect = Rect2(914, 452, 52, 56)
+
+[node name="TrunkSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -60)
+texture = ExtResource("1_6l7h7")
+region_enabled = true
+region_rect = Rect2(814, 454, 32, 81)
+
+[node name="FoliageSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -125)
+texture = ExtResource("1_6l7h7")
+region_enabled = true
+region_rect = Rect2(16, 565, 201, 167)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 15, -25, 3, -15, -15, -1, -22, 15, -15, 25, 3)
