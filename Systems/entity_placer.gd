@@ -332,26 +332,19 @@ func _finish_deconstruct(cellv: Vector2i) -> void:
 
 	# We convert the map position to a global position.
 	var location: Vector2 = map_to_local(cellv)
-	var blueprint: PackedScene = null
-	if Library.drops.has(entity.type):
-		# If we do have a drop override, we get it as a packed scene.
-		blueprint = Library.blueprints[Library.drops[entity.type]]
-	elif Library.blueprints.has(entity.type):
-		# If we do have a blueprint, we get it as a packed scene.
-		blueprint = Library.blueprints[entity.type]
+	var drop_blueprint: PackedScene = Library.blueprints[entity.drop_type]
 
-	if blueprint:
-		for _i in entity.pickup_count:
-			_drop_entity(blueprint.instantiate(), location)
+	for _i in entity.drop_count:
+		_drop_entity(drop_blueprint.instantiate(), location)
 
 
 ## Creates a new ground item with the given blueprint and sets it up at the
 ## deconstructed entity's location.
-func _drop_entity(entity: BlueprintEntity, location: Vector2) -> void:
+func _drop_entity(blueprint_entity: BlueprintEntity, location: Vector2) -> void:
 	# We instance a new ground item, add it, and set it up
 	var ground_item: = GroundItemScene.instantiate()
 	add_child(ground_item)
-	ground_item.setup(entity, location)
+	ground_item.setup(blueprint_entity, location)
 
 
 func _abort_deconstruct() -> void:

@@ -7,7 +7,7 @@
 script = ExtResource("1_pqf8i")
 type = 9
 deconstruct_filter = Array[int]([7, 8])
-pickup_count = 3
+drop_type = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
