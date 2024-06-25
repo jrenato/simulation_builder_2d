@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://crxnjqw7urxn6"]
+[gd_scene load_steps=10 format=3 uid="uid://crxnjqw7urxn6"]
 
 [ext_resource type="Theme" path="res://Assets/Theme/builder_theme.tres" id="1_0ppcf"]
 [ext_resource type="PackedScene" uid="uid://bflfhkpqspaag" path="res://GUI/inventory_window.tscn" id="2_2r3so"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://caeitvne1dvun" path="res://GUI/drag_preview.tscn" id="3_s66n5"]
 [ext_resource type="PackedScene" uid="uid://cfwnk0yc8pc6a" path="res://GUI/quick_bar.tscn" id="5_6c3s7"]
 [ext_resource type="PackedScene" uid="uid://dfd4ndkbm5ate" path="res://GUI/info_gui.tscn" id="6_y8i70"]
+[ext_resource type="PackedScene" uid="uid://cd5hf4udy4pmt" path="res://GUI/deconstruct_progress_bar.tscn" id="8_ujm0x"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q3ji3"]
 
@@ -56,4 +57,8 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="InfoGUI" parent="." instance=ExtResource("6_y8i70")]
+layout_mode = 2
+
+[node name="DeconstructProgressBar" parent="." instance=ExtResource("8_ujm0x")]
+unique_name_in_owner = true
 layout_mode = 2

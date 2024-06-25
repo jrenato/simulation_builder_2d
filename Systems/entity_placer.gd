@@ -316,9 +316,24 @@ func _deconstruct(event_position: Vector2, cellv: Vector2i) -> void:
 	# Set a modifier if it's a tool, otherwise keep the standard modifier
 	var modifier: float = 1.0 if not blueprint_in_hand is ToolEntity else 1.0 / blueprint_in_hand.tool_speed
 
+	var deconstruct_bar: TextureProgressBar = _gui.deconstruct_bar
+
+	# Just like we did it with the DragPreview, we need to transform the mouse's
+	# position to translate it from the GUI canvas layer.
+	deconstruct_bar.global_position = (
+		get_viewport_transform() * event_position + POSITION_OFFSET
+	)
+
+	deconstruct_bar.show()
+
+	var _deconstruct_tween: Tween = create_tween()
+	deconstruct_bar.value = 0.0
+	_deconstruct_tween.tween_property(deconstruct_bar, "value", 1, DECONSTRUCT_TIME * modifier)
+
 	# We then start the timer and store the cell we're targeting, which allows us to cancel
 	# the operation if the player's mouse moves to another cell.
 	_deconstruct_timer.start(DECONSTRUCT_TIME * modifier)
+
 	_current_deconstruct_location = cellv
 
 
@@ -337,6 +352,8 @@ func _finish_deconstruct(cellv: Vector2i) -> void:
 	for _i in entity.drop_count:
 		_drop_entity(drop_blueprint.instantiate(), location)
 
+	_gui.deconstruct_bar.hide()
+
 
 ## Creates a new ground item with the given blueprint and sets it up at the
 ## deconstructed entity's location.
@@ -351,3 +368,5 @@ func _abort_deconstruct() -> void:
 	if _deconstruct_timer.is_connected("timeout", _finish_deconstruct):
 		_deconstruct_timer.disconnect("timeout", _finish_deconstruct)
 	_deconstruct_timer.stop()
+
+	_gui.deconstruct_bar.hide()

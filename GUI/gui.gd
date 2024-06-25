@@ -30,6 +30,7 @@ var mouse_in_gui: bool = false
 
 ## We use the reference to the drag preview in the setter and getter functions.
 @onready var _drag_preview: Control = %DragPreview
+@onready var deconstruct_bar: TextureProgressBar = %DeconstructProgressBar
 @onready var _inventory_container: HBoxContainer = %InventoryContainer
 @onready var _quickbar_container: PanelContainer = %QuickBarContainer
 @onready var inventory: Inventory = %InventoryWindow

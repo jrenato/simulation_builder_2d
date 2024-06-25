@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd5hf4udy4pmt"]
+
+[ext_resource type="Texture2D" uid="uid://bod5fkpsiltu6" path="res://Assets/progress_circle.png" id="1_mn04p"]
+[ext_resource type="Script" path="res://GUI/deconstruct_progress_bar.gd" id="2_pund8"]
+
+[node name="DeconstructProgressBar" type="TextureProgressBar"]
+offset_right = 40.0
+offset_bottom = 40.0
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("1_mn04p")
+script = ExtResource("2_pund8")
