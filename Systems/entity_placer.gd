@@ -1,4 +1,4 @@
-extends TileMap
+extends TileMapLayer
 
 ## Distance from the player when the mouse stops being able to interact.
 const MAXIMUM_WORK_DISTANCE: float = 275.0
@@ -28,7 +28,7 @@ var _flat_entities: Node2D
 
 ## The ground tiles. We can check the position we're trying to put an entity down on
 ## to see if the mouse is over the tilemap.
-var _ground: TileMap
+var _ground: TileMapLayer
 
 ## The player entity. We can use it to check the distance from the mouse to prevent
 ## the player from interacting with entities that are too far away.
@@ -51,7 +51,7 @@ func _process(delta: float) -> void:
 
 ## Here's our setup() function. It sets the placer up with the data that it needs to function,
 ## and adds any pre-placed entities to the tracker.
-func setup(gui: Control, tracker: EntityTracker, ground: TileMap, flat_entities: Node2D, player: CharacterBody2D) -> void:
+func setup(gui: Control, tracker: EntityTracker, ground: TileMapLayer, flat_entities: Node2D, player: CharacterBody2D) -> void:
 	# We use the function to initialize our private references. As mentioned before, this approach
 	# makes refactoring easier, as the EntityPlacer doesn't need hard-coded paths to the EntityTracker,
 	# GroundTiles, and Player nodes.
@@ -108,7 +108,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# We check whether there is a ground tile underneath the current map coordinates.
 	# We don't want to place entities out in the air.
-	var is_on_ground: bool = _ground.get_cell_source_id(0, cellv) == 0
+	var is_on_ground: bool = _ground.get_cell_source_id(cellv) == 0
 
 	# When left-clicking, we use all our boolean variables to check the player can place an entity.
 	# Using variables with clear names helps to write code that reads *almost* like English.
@@ -169,7 +169,7 @@ func _move_blueprint_in_world(cellv: Vector2i) -> void:
 		< MAXIMUM_WORK_DISTANCE
 	)
 
-	var is_on_ground: bool = _ground.get_cell_source_id(0, cellv) == 0
+	var is_on_ground: bool = _ground.get_cell_source_id(cellv) == 0
 	var cell_is_occupied: bool = _tracker.is_cell_occupied(cellv)
 
 	# Tint according to whether the current tile is valid or not.

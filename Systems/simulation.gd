@@ -6,9 +6,10 @@ extends Node
 var label_offset: Vector2 = Vector2(-12.5, -12.5)
 var _tracker: EntityTracker = EntityTracker.new()
 
-@onready var _ground: TileMap = %GroundTiles
+@onready var _ground: TileMapLayer = %GroundTiles
+@onready var _barrier: TileMapLayer = %BarrierTiles
 @onready var _flat_entities: Node2D = %FlatEntities
-@onready var _entity_placer: TileMap = %EntityPlacer
+@onready var _entity_placer: TileMapLayer = %EntityPlacer
 @onready var _player: Player = %Player
 @onready var _systems_timer: Timer = %SystemsTimer
 @onready var _gui: CenterContainer = %GUI
@@ -29,9 +30,10 @@ func _ready() -> void:
 
 
 func hide_barrier_layer() -> void:
-	for i in range(_ground.get_layers_count()):
-		if _ground.get_layer_name(i) == 'Barrier':
-			_ground.set_layer_modulate(i, Color(_ground.get_layer_modulate(i), 0.0))
+	#for i in range(_ground.get_layers_count()):
+		#if _ground.get_layer_name(i) == 'Barrier':
+			#_ground.set_layer_modulate(i, Color(_ground.get_layer_modulate(i), 0.0))
+	_barrier.visible = false
 
 
 #func numerate_ground() -> void:
