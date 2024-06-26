@@ -21,3 +21,4 @@ const NEIGHBORS: Dictionary = {
 const POWER_MOVERS: String = "power_movers"
 const POWER_RECEIVERS: String = "power_receivers"
 const POWER_SOURCES: String = "power_sources"
+const GUI_ENTITIES: String = "gui_entities"

@@ -28,6 +28,9 @@ var blueprint: BlueprintEntity:
 ## If `true`, it means the mouse is over the `GUI` at the moment.
 var mouse_in_gui: bool = false
 
+## The currently opened entity GUI.
+var _open_gui: Control
+
 ## We use the reference to the drag preview in the setter and getter functions.
 @onready var _drag_preview: Control = %DragPreview
 @onready var deconstruct_bar: TextureProgressBar = %DeconstructProgressBar
@@ -145,20 +148,34 @@ func _get_blueprint() -> BlueprintEntity:
 
 
 ## Shows the inventory window, crafting window
-func _open_inventories() -> void:
+# We add a new `open_crafting` argument to the function to optionally hide the
+# crafting recipe list.
+# Making `open_crafting` an optional variable that defaults to `true` means we
+# don't have to go back to other functions and change them.
+func _open_inventories(open_crafting: bool = true) -> void:
 	is_open = true
 	inventory.visible = true
 	inventory.claim_quickbar(quickbar)
-	crafting.visible = true
-	crafting.update_recipes()
+	# If we should open the crafting window, then make it visible and update its
+	# recipes. Otherwise, we leave it hidden.
+	if open_crafting:
+		crafting.visible = true
+		crafting.update_recipes()
 
 
 ## Hides the inventory window, crafting window, and any currently open machine GUI
 func _close_inventories() -> void:
 	is_open = false
 	inventory.visible = false
+	if crafting.visible:
+		crafting.visible = false
 	_claim_quickbar()
-	crafting.visible = false
+	# If we have an open gui, then we remove it from the scene tree and clear
+	# the `_open_gui` property.
+	# We don't free it: that's the component's job.
+	if _open_gui:
+		inventory.inventory_path.remove_child(_open_gui)
+		_open_gui = null
 
 
 ## Removes the quickbar from its current parent and puts it back under the
@@ -191,6 +208,45 @@ func add_to_inventory(item: BlueprintEntity) -> bool:
 		return true
 
 	return inventory.add_to_first_available_inventory(item)
+
+
+## Returns a `GUIComponent` from the scene tree of an entity.
+## Returns `null` if none is found.
+func get_gui_component_from(entity: Node) -> GUIComponent:
+	for child in entity.get_children():
+		if child is GUIComponent:
+			return child
+
+	return null
+
+
+## Adds the entity's GUI to the inventory window and displays the inventory
+## window.
+func open_entity_gui(entity: Entity) -> void:
+	var component: GUIComponent = get_gui_component_from(entity)
+	if not component:
+		return
+
+	# If the inventory window is already open, we close it first. This ensures
+	# we close any currently opened gui from another entity first.
+	if is_open:
+		_close_inventories()
+
+	_open_gui = component.gui
+
+	# If the gui is not already in the inventory window, we add it. We also
+	# raise the child to the highest tree position so it appears above the
+	# inventory, instead of below it.
+	# That's necessary because the inventory uses a VBoxContainer.
+	if not _open_gui.get_parent() == inventory.inventory_path:
+		inventory.inventory_path.add_child(_open_gui)
+		inventory.inventory_path.move_child(_open_gui, 0)
+
+	# We make sure to call `BaseMachineGUI.setup()`, then call
+	# `open_inventories()`, but without the crafting window.
+	_open_gui.setup(self)
+	# See below as we add a new argument to `_open_inventories()`.
+	_open_inventories(false)
 
 
 ## Tries to add the ground item detected by the player collision into the player's

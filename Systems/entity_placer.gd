@@ -117,6 +117,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			if not cell_is_occupied and is_close_to_player and is_on_ground:
 				_place_entity(cellv)
 				_update_neighboring_flat_entities(cellv)
+		# If we are not holding onto a blueprint and we click on an occupied
+		# cell in range, and the entity is part of the GUI_ENTITIES, then call
+		# GUI's `open_entity_gui()`.
+		elif cell_is_occupied and is_close_to_player:
+			var entity := _tracker.get_entity_at(cellv)
+			if entity and entity.is_in_group(Types.GUI_ENTITIES):
+				_gui.open_entity_gui(entity)
+				_clear_hover_entity(cellv)
+
 	# When right clicking...
 	elif event.is_action_pressed("right_click") and not has_placeable_blueprint:
 		# ...onto a tile within range that has an entity in it,
