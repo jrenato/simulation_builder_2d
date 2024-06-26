@@ -5,35 +5,6 @@
 [ext_resource type="Script" path="res://GUI/gui_component.gd" id="2_q7xmc"]
 [ext_resource type="PackedScene" uid="uid://c5aevhvhfxx5s" path="res://Entities/Chest/chest_gui.tscn" id="3_k0jsl"]
 
-[sub_resource type="Animation" id="Animation_emdsa"]
-resource_name = "open"
-length = 0.4
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LidSprite:region_rect")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Rect2(909, 369, 62, 37), Rect2(797, 369, 67, 29), Rect2(687, 368, 68, 23), Rect2(576, 360, 67, 31), Rect2(465, 353, 64, 38), Rect2(354, 348, 60, 43), Rect2(244, 344, 52, 47), Rect2(134, 341, 44, 51), Rect2(23, 341, 38, 52)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("LidSprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Vector2(0, -17.595), Vector2(0, -21.595), Vector2(0, -25.595), Vector2(-1, -29.595), Vector2(-3, -33.595), Vector2(-5, -36.595), Vector2(-10, -37.595), Vector2(-14, -38.595), Vector2(-18, -38.595)]
-}
-
 [sub_resource type="Animation" id="Animation_vp8r0"]
 length = 0.001
 tracks/0/type = "value"
@@ -90,6 +61,35 @@ tracks/1/keys = {
 "values": [Vector2(-18, -38.595), Vector2(-14, -38.595), Vector2(-10, -37.595), Vector2(-5, -36.595), Vector2(-3, -33.595), Vector2(-1, -29.595), Vector2(0, -25.595), Vector2(0, -21.595), Vector2(0, -17.595)]
 }
 
+[sub_resource type="Animation" id="Animation_emdsa"]
+resource_name = "open"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LidSprite:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(909, 369, 62, 37), Rect2(797, 369, 67, 29), Rect2(687, 368, 68, 23), Rect2(576, 360, 67, 31), Rect2(465, 353, 64, 38), Rect2(354, 348, 60, 43), Rect2(244, 344, 52, 47), Rect2(134, 341, 44, 51), Rect2(23, 341, 38, 52)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LidSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, -17.595), Vector2(0, -21.595), Vector2(0, -25.595), Vector2(-1, -29.595), Vector2(-3, -33.595), Vector2(-5, -36.595), Vector2(-10, -37.595), Vector2(-14, -38.595), Vector2(-18, -38.595)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6oi58"]
 _data = {
 "RESET": SubResource("Animation_vp8r0"),
@@ -99,6 +99,8 @@ _data = {
 
 [node name="ChestEntity" type="StaticBody2D" groups=["gui_entities"]]
 script = ExtResource("1_xy444")
+type = 15
+drop_type = 15
 
 [node name="GUIComponent" type="Node" parent="."]
 unique_name_in_owner = true

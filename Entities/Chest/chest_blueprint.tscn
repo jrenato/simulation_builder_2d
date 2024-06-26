@@ -5,10 +5,11 @@
 
 [node name="ChestBlueprint" type="Node2D"]
 script = ExtResource("1_7qbhs")
+type = 15
 stack_size = 2
 description = "Stores items in its inventory"
 
-[node name="BoxSprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -10.5)
 texture = ExtResource("2_uk5dq")
 region_enabled = true

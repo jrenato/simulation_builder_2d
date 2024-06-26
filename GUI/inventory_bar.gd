@@ -97,6 +97,16 @@ func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 	return false
 
 
+## Returns the combined inventory of all inventory panels.
+func get_inventory() -> Array:
+	var output := []
+	for slot in slots:
+		if is_instance_valid(slot.held_item):
+			output.push_back(slot.held_item)
+
+	return output
+
+
 ## Bubbles up the signal from the inventory bar up to the inventory window.
 func _on_slot_held_item_changed(slot: InventorySlot, held_item: BlueprintEntity) -> void:
 	inventory_changed.emit(slot, held_item)

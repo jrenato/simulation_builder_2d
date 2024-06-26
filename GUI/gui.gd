@@ -196,6 +196,25 @@ func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
 	return existing_stacks
 
 
+## Recursively searches the given component's GUI scene for inventory bars.
+func find_inventory_bars_in(component: GUIComponent) -> Array:
+	var output := []
+	# Keep a stack of nodes. We will keep popping the back element from it, and add
+	# all children we find to get _their_ children, so on and so forth.
+	var parent_stack := [component.gui]
+
+	# Keep searching children until there are no more nodes to search.
+	while not parent_stack.is_empty():
+		var current: Node = parent_stack.pop_back()
+
+		if current is InventoryBar:
+			output.push_back(current)
+
+		parent_stack += current.get_children()
+
+	return output
+
+
 ## Tries to add the blueprint to the inventory, starting with existing item
 ## stacks and then to an empty panel in the quickbar, then in the main inventory.
 ## Returns true if it succeeds.

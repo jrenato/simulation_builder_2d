@@ -351,16 +351,29 @@ func _finish_deconstruct(cellv: Vector2i) -> void:
 	# This function will drop the deconstructed entity as a pickup item,
 	# but we haven't implemented an inventory yet, so we only remove the entity.
 	var entity: Entity = _tracker.get_entity_at(cellv)
-	_tracker.remove_entity(cellv)
-	_update_neighboring_flat_entities(cellv)
-
 	# We convert the map position to a global position.
 	var location: Vector2 = map_to_local(cellv)
-	var drop_blueprint: PackedScene = Library.blueprints[entity.drop_type]
 
+	# Drop the entities registered
+	var drop_blueprint: PackedScene = Library.blueprints[entity.drop_type]
 	for _i in entity.drop_count:
 		_drop_entity(drop_blueprint.instantiate(), location)
 
+	# We check if the entity has a GUI component and look for its inventories.
+	if entity.is_in_group(Types.GUI_ENTITIES):
+		var inventories: Array = _gui.find_inventory_bars_in(_gui.get_gui_component_from(entity))
+
+		# We then loop over all inventories to find all the items they contain.
+		var inventory_items := []
+		for inventory in inventories:
+			inventory_items += inventory.get_inventory()
+
+		# And we drop
+		for item in inventory_items:
+			_drop_entity(item, location)
+
+	_tracker.remove_entity(cellv)
+	_update_neighboring_flat_entities(cellv)
 	_gui.deconstruct_bar.hide()
 
 

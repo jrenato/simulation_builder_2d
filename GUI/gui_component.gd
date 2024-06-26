@@ -26,6 +26,26 @@ func _ready() -> void:
 	gui.gui_closed.connect(func(): gui_closed.emit())
 
 
+# Returns an array of InventoryBar instances in the node's interface.
+func get_inventory_bars() -> Array:
+	var output := []
+	var parent_stack := [gui]
+
+	# We loop recursively over the interface and its children, exploring its
+	# nodes to find all inventory bars.
+	while not parent_stack.is_empty():
+		var current: Node = parent_stack.pop_back()
+
+		if current is InventoryBar:
+			output.push_back(current)
+
+		# Here's what keeps the loop going: we add the current node's children
+		# to the stack until its empties.
+		parent_stack += current.get_children()
+
+	return output
+
+
 func _exit_tree() -> void:
 	if gui:
 		# Because the gui instance is not likely to be in the scene tree when we
