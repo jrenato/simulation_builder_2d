@@ -14,6 +14,8 @@ signal inventory_changed(slot: InventorySlot, held_item: BlueprintEntity)
 ## check their contents later.
 var slots: Array[InventorySlot] = []
 
+var is_setup: bool = false
+
 
 func _ready() -> void:
 	# Create the bar's slots first thing.
@@ -22,6 +24,11 @@ func _ready() -> void:
 
 ## Sets up each of the inventory panels and connects to their `held_item_changed` signal.
 func setup(gui: Control) -> void:
+	if is_setup:
+		return
+
+	is_setup = true
+
 	# For each panel we've created in `_ready()`, we forward the reference to the GUI node
 	# and connect to their signal.
 	for slot in slots:

@@ -18,6 +18,8 @@ enum TYPE {
 	CRUDE_AXE,
 	PICKAXE,
 	CRUDE_PICKAXE,
+
+	CHEST,
 }
 
 ## This dictionary holds the names of the entities keyed to their types.
@@ -39,6 +41,8 @@ var entity_names: Dictionary = {
 	TYPE.CRUDE_AXE: "Crude Axe",
 	TYPE.PICKAXE: "Pickaxe",
 	TYPE.CRUDE_PICKAXE: "Crude Pickaxe",
+
+	TYPE.CHEST: "Chest",
 }
 
 ## This dictionary holds the entities keyed to their types.
@@ -49,6 +53,8 @@ var entities: Dictionary = {
 
 	TYPE.BRANCH: load("res://Entities/Common/Branch/branch_entity.tscn"),
 	TYPE.STONE: load("res://Entities/Common/Stone/stone_entity.tscn"),
+
+	TYPE.CHEST: load("res://Entities/Chest/chest_entity.tscn"),
 }
 
 ## The dictionary holds blueprints keyed to their types.
@@ -67,6 +73,8 @@ var blueprints: Dictionary = {
 	TYPE.CRUDE_AXE: load("res://Entities/Tools/crude_axe_blueprint.tscn"),
 	TYPE.PICKAXE: load("res://Entities/Tools/pickaxe_blueprint.tscn"),
 	TYPE.CRUDE_PICKAXE: load("res://Entities/Tools/crude_pickaxe_blueprint.tscn"),
+
+	TYPE.CHEST: load("res://Entities/Chest/chest_blueprint.tscn"),
 }
 
 ## The dictionary holds recipes keyed to their types.

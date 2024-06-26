@@ -40,6 +40,7 @@ inventory_slot_size=75.0
 power_sources=""
 power_movers=""
 power_receivers=""
+gui_entities=""
 
 [gui]
 

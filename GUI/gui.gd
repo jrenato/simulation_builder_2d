@@ -174,7 +174,7 @@ func _close_inventories() -> void:
 	# the `_open_gui` property.
 	# We don't free it: that's the component's job.
 	if _open_gui:
-		inventory.inventory_path.remove_child(_open_gui)
+		inventory.inventory_bars.remove_child(_open_gui)
 		_open_gui = null
 
 
@@ -238,9 +238,9 @@ func open_entity_gui(entity: Entity) -> void:
 	# raise the child to the highest tree position so it appears above the
 	# inventory, instead of below it.
 	# That's necessary because the inventory uses a VBoxContainer.
-	if not _open_gui.get_parent() == inventory.inventory_path:
-		inventory.inventory_path.add_child(_open_gui)
-		inventory.inventory_path.move_child(_open_gui, 0)
+	if not _open_gui.get_parent() == inventory.inventory_bars:
+		inventory.inventory_bars.add_child(_open_gui)
+		inventory.inventory_bars.move_child(_open_gui, 0)
 
 	# We make sure to call `BaseMachineGUI.setup()`, then call
 	# `open_inventories()`, but without the crafting window.
