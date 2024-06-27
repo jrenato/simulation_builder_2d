@@ -272,6 +272,8 @@ func open_entity_gui(entity: Entity) -> void:
 ## inventory and trigger the animation for it.
 func _on_player_entered_pickup_area(item: GroundEntity, player: CharacterBody2D) -> void:
 	if not (item and item.blueprint):
+		if item and not item.blueprint:
+			printerr("Missing blueprint in item ", item)
 		return
 
 	# We get the current amount inside the stack. It's possible for there to be

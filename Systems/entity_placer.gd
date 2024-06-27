@@ -370,7 +370,9 @@ func _finish_deconstruct(cellv: Vector2i) -> void:
 
 		# And we drop
 		for item in inventory_items:
-			_drop_entity(item, location)
+			# Duplicate because we're about to remove the original blueprint from the inventory
+			# If we don't do it, blueprint will become null on the ground item
+			_drop_entity(item.duplicate(), location)
 
 	_tracker.remove_entity(cellv)
 	_update_neighboring_flat_entities(cellv)
