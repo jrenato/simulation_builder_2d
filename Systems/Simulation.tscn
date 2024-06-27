@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://dglnlp8l7cwvc"]
+[gd_scene load_steps=20 format=4 uid="uid://dglnlp8l7cwvc"]
 
 [ext_resource type="Script" path="res://Systems/simulation.gd" id="1_q45le"]
 [ext_resource type="TileSet" uid="uid://cgxr4kr0mbhgb" path="res://Resources/tileset.tres" id="2_er2vg"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dmqj5tjkhtade" path="res://Entities/Common/Lumber/tree_entity.tscn" id="10_assuw"]
 [ext_resource type="PackedScene" uid="uid://cv0ywnkoudexn" path="res://Entities/Common/Ore/ore_boulder_entity.tscn" id="11_f6fpa"]
 [ext_resource type="PackedScene" uid="uid://b68iox5gvf4oi" path="res://Entities/Chest/chest_entity.tscn" id="12_ktv34"]
+[ext_resource type="PackedScene" uid="uid://cstt5vsg7svpv" path="res://Entities/PowerSystem/StirlingEngine/stirling_engine_entity.tscn" id="14_2od1v"]
 
 [sub_resource type="Resource" id="Resource_c7fqs"]
 script = ExtResource("4_uaa3k")
@@ -102,6 +103,9 @@ position = Vector2(-149, -123)
 
 [node name="OreBoulderEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("11_f6fpa")]
 position = Vector2(301, 46)
+
+[node name="StirlingEngineEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("14_2od1v")]
+position = Vector2(453, -73)
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
 unique_name_in_owner = true
