@@ -16,6 +16,9 @@ var held_item: BlueprintEntity: set = _set_held_item
 ## We'll store a reference to the main GUI node to access the mouse's inventory.
 var gui: Control
 
+var item_filter: Array[Library.TYPE] = []
+var group_filter: Array[Library.GROUP_TYPE] = []
+
 ## We'll keep track of the stack size using the label.
 @onready var count_label: Label = %CountLabel
 
@@ -29,7 +32,9 @@ func _ready() -> void:
 
 
 ## Store a reference to the GUI so we can access the mouse's inventory.
-func setup(_gui: Control) -> void:
+func setup(_gui: Control, _item_filter: Array[Library.TYPE], _group_filter: Array[Library.GROUP_TYPE]) -> void:
+	item_filter = _item_filter
+	group_filter = _group_filter
 	gui = _gui
 
 
@@ -114,18 +119,18 @@ func handle_mouse_click(left_click: bool, right_click: bool) -> void:
 			# If the items are not the same name or there is no space, we swap the two items,
 			# putting the slots's in the mouse and the mouse's in the slot.
 			else:
-				if left_click:
+				if left_click and Library.is_valid_filter(gui.blueprint.type, item_filter, group_filter):
 					_swap_items()
 		# If this inventory slot is empty,
 		else:
 			# if the player left-clicks on the slot, we put the item in the slot (the
 			# inventory slot grabs the item from the mouse's inventory).
-			if left_click:
+			if left_click and Library.is_valid_filter(gui.blueprint.type, item_filter, group_filter):
 				_grab_item()
 
 			# if the player right-clicks, we either put half the mouse's stack in the slot
 			# or put the mouse's item in the slot if it can't stack.
-			elif right_click:
+			elif right_click and Library.is_valid_filter(gui.blueprint.type, item_filter, group_filter):
 				if gui.blueprint.stack_count > 1:
 					_grab_split_items()
 				else:

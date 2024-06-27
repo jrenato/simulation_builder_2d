@@ -10,6 +10,13 @@ signal inventory_changed(slot: InventorySlot, held_item: BlueprintEntity)
 ## How many slots to create as children of the bar.
 @export var slot_count: int = 10
 
+## An array of types of possible items or categories of items the
+## panels can accept
+@export var item_filter: Array[Library.TYPE] = []
+
+## Optionaly, a group can be used as filter
+@export var group_filter: Array[Library.GROUP_TYPE] = []
+
 ## An array of references to the slots we create so we can refer to them and
 ## check their contents later.
 var slots: Array[InventorySlot] = []
@@ -32,7 +39,7 @@ func setup(gui: Control) -> void:
 	# For each panel we've created in `_ready()`, we forward the reference to the GUI node
 	# and connect to their signal.
 	for slot in slots:
-		slot.setup(gui)
+		slot.setup(gui, item_filter, group_filter)
 		slot.held_item_changed.connect(_on_slot_held_item_changed)
 
 
@@ -62,6 +69,9 @@ func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
 ## Tries to add the provided item to the first available empty space. Returns
 ## true if it succeeds.
 func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
+	if not Library.is_valid_filter(item.type, item_filter, group_filter):
+		return false
+
 	for slot in slots:
 		# If the slot already has an item and its type matches that of the item
 		# we are trying to put in it, _and_ there is space for it, we merge the
@@ -105,6 +115,14 @@ func get_inventory() -> Array:
 			output.push_back(slot.held_item)
 
 	return output
+
+## When we consume an item like fuel, we need a way to make sure the stack count
+## is up to date.
+## this helper function will keep the label up to date on its panel children.
+func update_labels() -> void:
+	for slot in slots:
+		if slot.held_item:
+			slot._update_label()
 
 
 ## Bubbles up the signal from the inventory bar up to the inventory window.

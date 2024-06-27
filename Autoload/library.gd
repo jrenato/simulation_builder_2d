@@ -20,6 +20,12 @@ enum TYPE {
 	CRUDE_PICKAXE,
 
 	CHEST,
+	COAL,
+	CHARCOAL,
+}
+
+enum GROUP_TYPE {
+	FUELS,
 }
 
 ## This dictionary holds the names of the entities keyed to their types.
@@ -83,3 +89,33 @@ var recipes: Dictionary = {
 	TYPE.BATTERY: load("res://Systems/Recipes/battery_recipe.tres"),
 	TYPE.WIRE: load("res://Systems/Recipes/wire_recipe.tres"),
 }
+
+
+var entity_groups = {
+	# Type -> efficiency
+	GROUP_TYPE.FUELS: {
+		TYPE.BRANCH: 10.0,
+		TYPE.LUMBER: 50.0,
+		TYPE.COAL: 60.0,
+		TYPE.CHARCOAL: 60.0,
+	}
+}
+
+
+## Returns `true` if the provided item matches the provided filter arrays.
+func is_valid_filter(item_type: TYPE, item_filters: Array[Library.TYPE], group_filters: Array[Library.GROUP_TYPE]) -> bool:
+	# If there is no filter, any item is accepted
+	if item_filters.is_empty() and group_filters.is_empty():
+		return true
+
+	# Item type is in item filters
+	if item_type in item_filters:
+		return true
+
+	# If it's not, we check any listed item groups in the filter list and if
+	# there's one defined, we look it up in the recipes.
+	for group_filter in group_filters:
+		if item_type in entity_groups[group_filter]:
+			return true
+
+	return false

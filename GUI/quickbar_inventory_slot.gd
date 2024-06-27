@@ -5,4 +5,4 @@ class_name QuickBarInventorySlot extends VBoxContainer
 
 ## Forwards the call to `setup()` to the inventory slot
 func setup(gui: Control) -> void:
-	inventory_slot.setup(gui)
+	inventory_slot.setup(gui, [], [])

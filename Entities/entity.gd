@@ -1,6 +1,7 @@
 class_name Entity extends Node2D
 
 @export var type: Library.TYPE
+
 ## Specifies the object type that is allowed to deconstruct this entity.
 ## Deconstructing means harvesting a resource or turning an entity in the world into an item.
 ## For example, the player must hold an Axe to chop down a tree,

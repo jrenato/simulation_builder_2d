@@ -92,19 +92,16 @@ position = Vector2(0, -150)
 position = Vector2(302, -53)
 
 [node name="BoulderEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("9_1jrme")]
-position = Vector2(-95, 48)
+position = Vector2(-94, 50)
 
 [node name="TreeEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("10_assuw")]
-position = Vector2(198, -152)
-
-[node name="BoulderEntity2" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("9_1jrme")]
-position = Vector2(451, -174)
-
-[node name="OreBoulderEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("11_f6fpa")]
-position = Vector2(203, 49)
+position = Vector2(251, -177)
 
 [node name="ChestEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("12_ktv34")]
-position = Vector2(-149, -125)
+position = Vector2(-149, -123)
+
+[node name="OreBoulderEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("11_f6fpa")]
+position = Vector2(301, 46)
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
 unique_name_in_owner = true
