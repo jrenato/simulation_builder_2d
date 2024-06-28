@@ -6,7 +6,7 @@
 [node name="IngotBlueprint" type="Node2D"]
 script = ExtResource("1_hgl4h")
 placeable = false
-type = 4
+type = 10
 stack_size = 50
 description = "Smelted ore"
 

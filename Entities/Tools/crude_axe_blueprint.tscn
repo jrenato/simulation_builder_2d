@@ -7,7 +7,7 @@
 script = ExtResource("1_mkxhw")
 tool_speed = 0.1
 placeable = false
-type = 6
+type = 12
 description = "A bad quality axe"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

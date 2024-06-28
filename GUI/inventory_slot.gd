@@ -112,6 +112,7 @@ func handle_mouse_click(left_click: bool, right_click: bool) -> void:
 			if item_is_same_type and stack_has_space:
 				# If the player left-clicked, we merge the mouse's entire stack with this one.
 				if left_click:
+					prints(held_item.type, gui.blueprint.type)
 					_stack_items()
 				# With a right-click, we merge half of the mouse's stack with this one.
 				elif right_click:

@@ -6,7 +6,7 @@
 [node name="PickaxeBlueprint" type="Node2D"]
 script = ExtResource("1_qcfed")
 placeable = false
-type = 7
+type = 13
 description = "A good quality pickaxe"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

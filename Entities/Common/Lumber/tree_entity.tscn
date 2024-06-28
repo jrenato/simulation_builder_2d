@@ -6,7 +6,7 @@
 [node name="TreeEntity" type="StaticBody2D"]
 script = ExtResource("1_x7y0q")
 type = 4
-deconstruct_filter = Array[int]([5, 6])
+deconstruct_filter = Array[int]([11, 13])
 drop_type = 5
 drop_count = 5
 
