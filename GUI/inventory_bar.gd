@@ -122,7 +122,7 @@ func get_inventory() -> Array[BlueprintEntity]:
 func update_labels() -> void:
 	for slot in slots:
 		if slot.held_item:
-			slot._update_label()
+			slot.update_label()
 
 
 ## Bubbles up the signal from the inventory bar up to the inventory window.

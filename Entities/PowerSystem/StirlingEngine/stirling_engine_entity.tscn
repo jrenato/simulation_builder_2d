@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cstt5vsg7svpv"]
+[gd_scene load_steps=11 format=3 uid="uid://cstt5vsg7svpv"]
 
 [ext_resource type="Script" path="res://Entities/PowerSystem/StirlingEngine/stirling_engine_entity.gd" id="1_83y0f"]
 [ext_resource type="Texture2D" uid="uid://b51vo4lwl0bul" path="res://Assets/tileset.svg" id="1_r82gv"]
@@ -34,6 +34,34 @@ tracks/1/keys = {
 "values": [Vector2(0, -2.5)]
 }
 
+[sub_resource type="Animation" id="Animation_rho8w"]
+resource_name = "shutdown"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PistonBack:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -33.5), Vector2(0, -65.5), Vector2(0, -33.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PistonFront:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.266667, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -2.5), Vector2(0, -34.5), Vector2(0, -2.5)]
+}
+
 [sub_resource type="Animation" id="Animation_r26ok"]
 resource_name = "work"
 length = 0.6
@@ -66,13 +94,19 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b4xky"]
 _data = {
 "RESET": SubResource("Animation_rsm7x"),
+"shutdown": SubResource("Animation_rho8w"),
 "work": SubResource("Animation_r26ok")
 }
 
 [node name="StirlingEngineEntity" type="StaticBody2D" groups=["gui_entities", "power_sources"]]
 script = ExtResource("1_83y0f")
 
+[node name="PowerSource" parent="." instance=ExtResource("4_6b0jd")]
+unique_name_in_owner = true
+power_amount = 25.0
+
 [node name="GUIComponent" type="Node" parent="." groups=["gui_entities"]]
+unique_name_in_owner = true
 script = ExtResource("2_w2vgx")
 GuiWindow = ExtResource("3_7sqy8")
 
@@ -111,7 +145,3 @@ libraries = {
 "": SubResource("AnimationLibrary_b4xky")
 }
 speed_scale = 0.0
-
-[node name="PowerSource" parent="." instance=ExtResource("4_6b0jd")]
-unique_name_in_owner = true
-power_amount = 25.0

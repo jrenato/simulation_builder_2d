@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfaiqxtfong4q"]
+[gd_scene load_steps=5 format=3 uid="uid://bfaiqxtfong4q"]
 
 [ext_resource type="Script" path="res://Entities/PowerSystem/StirlingEngine/stirling_engine_gui.gd" id="1_dke2o"]
 [ext_resource type="PackedScene" uid="uid://4vjolsmd3wyq" path="res://GUI/inventory_bar.tscn" id="1_njiy3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kyk7m"]
+bg_color = Color(0.188235, 0.462745, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nolai"]
+bg_color = Color(0.188235, 1, 1, 1)
 
 [node name="StirlingEngineGUI" type="MarginContainer"]
 offset_right = 40.0
@@ -18,8 +24,11 @@ layout_mode = 2
 
 [node name="FuelProgressBar" type="ProgressBar" parent="HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(5, 25)
+custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_kyk7m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_nolai")
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
