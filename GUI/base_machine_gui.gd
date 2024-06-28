@@ -23,5 +23,5 @@ func _exit_tree() -> void:
 ## Sets up anything the interface needs before use. For example, we'll use the
 ## `InventoryBar` class, which needs a reference to the `GUI` class.
 ## We'll override this function in extended classes.
-func setup(_gui: Control) -> void:
+func setup(_gui: GameGUI) -> void:
 	pass

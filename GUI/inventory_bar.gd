@@ -30,7 +30,7 @@ func _ready() -> void:
 
 
 ## Sets up each of the inventory panels and connects to their `held_item_changed` signal.
-func setup(gui: Control) -> void:
+func setup(gui: GameGUI) -> void:
 	if is_setup:
 		return
 
@@ -108,8 +108,8 @@ func add_to_first_available_inventory(item: BlueprintEntity) -> bool:
 
 
 ## Returns the combined inventory of all inventory panels.
-func get_inventory() -> Array:
-	var output := []
+func get_inventory() -> Array[BlueprintEntity]:
+	var output: Array[BlueprintEntity] = []
 	for slot in slots:
 		if is_instance_valid(slot.held_item):
 			output.push_back(slot.held_item)

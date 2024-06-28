@@ -16,7 +16,7 @@ var gui: Control
 
 ## Here, we define the missing `setup()` function we called from `GUI.gd` in the previous lesson.
 ## It forwards the setup call to the inventory bars, so they can setup their panels.
-func setup(_gui: Control) -> void:
+func setup(_gui: GameGUI) -> void:
 	gui = _gui
 	for bar in inventories:
 		bar.setup(gui)

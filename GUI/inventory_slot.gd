@@ -14,7 +14,7 @@ signal held_item_changed(slot: InventorySlot, item: BlueprintEntity)
 var held_item: BlueprintEntity: set = _set_held_item
 
 ## We'll store a reference to the main GUI node to access the mouse's inventory.
-var gui: Control
+var gui: GameGUI
 
 var item_filter: Array[Library.TYPE] = []
 var group_filter: Array[Library.GROUP_TYPE] = []
@@ -32,7 +32,7 @@ func _ready() -> void:
 
 
 ## Store a reference to the GUI so we can access the mouse's inventory.
-func setup(_gui: Control, _item_filter: Array[Library.TYPE], _group_filter: Array[Library.GROUP_TYPE]) -> void:
+func setup(_gui: GameGUI, _item_filter: Array[Library.TYPE], _group_filter: Array[Library.GROUP_TYPE]) -> void:
 	item_filter = _item_filter
 	group_filter = _group_filter
 	gui = _gui
@@ -155,7 +155,7 @@ func _stack_items(split: bool = false) -> void:
 	# which is why we pick the smaller number.
 	var count: int = int(
 		min(
-			gui.blueprint.stack_count / (2 if split else 1),
+			gui.blueprint.stack_count / (2.0 if split else 1.0),
 			held_item.stack_size - held_item.stack_count
 		)
 	)

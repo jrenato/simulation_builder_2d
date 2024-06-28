@@ -1,4 +1,4 @@
-extends CenterContainer
+class_name GameGUI extends CenterContainer
 
 ## Each of the action as listed in the input map. We place them in an array so we
 ## can iterate over each one.
@@ -29,7 +29,7 @@ var blueprint: BlueprintEntity:
 var mouse_in_gui: bool = false
 
 ## The currently opened entity GUI.
-var _open_gui: Control
+var _open_gui: BaseMachineGUI
 
 ## We use the reference to the drag preview in the setter and getter functions.
 @onready var _drag_preview: Control = %DragPreview
@@ -197,8 +197,8 @@ func find_slots_with(item_type: Library.TYPE) -> Array[InventorySlot]:
 
 
 ## Recursively searches the given component's GUI scene for inventory bars.
-func find_inventory_bars_in(component: GUIComponent) -> Array:
-	var output := []
+func find_inventory_bars_in(component: GUIComponent) -> Array[InventoryBar]:
+	var output: Array[InventoryBar] = []
 	# Keep a stack of nodes. We will keep popping the back element from it, and add
 	# all children we find to get _their_ children, so on and so forth.
 	var parent_stack := [component.gui]

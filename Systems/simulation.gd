@@ -12,7 +12,7 @@ var _tracker: EntityTracker = EntityTracker.new()
 @onready var _entity_placer: TileMapLayer = %EntityPlacer
 @onready var _player: Player = %Player
 @onready var _systems_timer: Timer = %SystemsTimer
-@onready var _gui: CenterContainer = %GUI
+@onready var _gui: GameGUI = %GUI
 
 @onready var _power_system: PowerSystem = PowerSystem.new()
 

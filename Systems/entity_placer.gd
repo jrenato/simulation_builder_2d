@@ -17,7 +17,7 @@ const DECONSTRUCT_TIME: float = 0.3
 var GroundItemScene: PackedScene = preload("res://Entities/ground_entity.tscn")
 
 ## Reference for gui to access the mouse's inventory
-var _gui: Control
+var _gui: GameGUI
 
 ## The simulation's entity tracker. We use its functions to know if a cell is available or it
 ## already has an entity.
@@ -51,7 +51,7 @@ func _process(delta: float) -> void:
 
 ## Here's our setup() function. It sets the placer up with the data that it needs to function,
 ## and adds any pre-placed entities to the tracker.
-func setup(gui: Control, tracker: EntityTracker, ground: TileMapLayer, flat_entities: Node2D, player: CharacterBody2D) -> void:
+func setup(gui: GameGUI, tracker: EntityTracker, ground: TileMapLayer, flat_entities: Node2D, player: CharacterBody2D) -> void:
 	# We use the function to initialize our private references. As mentioned before, this approach
 	# makes refactoring easier, as the EntityPlacer doesn't need hard-coded paths to the EntityTracker,
 	# GroundTiles, and Player nodes.
@@ -361,10 +361,10 @@ func _finish_deconstruct(cellv: Vector2i) -> void:
 
 	# We check if the entity has a GUI component and look for its inventories.
 	if entity.is_in_group(Types.GUI_ENTITIES):
-		var inventories: Array = _gui.find_inventory_bars_in(_gui.get_gui_component_from(entity))
+		var inventories: Array[InventoryBar] = _gui.find_inventory_bars_in(_gui.get_gui_component_from(entity))
 
 		# We then loop over all inventories to find all the items they contain.
-		var inventory_items := []
+		var inventory_items: Array[BlueprintEntity] = []
 		for inventory in inventories:
 			inventory_items += inventory.get_inventory()
 

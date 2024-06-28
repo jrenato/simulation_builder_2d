@@ -9,7 +9,7 @@ var gui: Control
 
 ## We use this function to get a reference to the main GUI node, which, in turn,
 ## will give us functions to access the inventory.
-func setup(_gui: Control) -> void:
+func setup(_gui: GameGUI) -> void:
 	gui = _gui
 
 ## The main function that forces an update of all recipes based on what items

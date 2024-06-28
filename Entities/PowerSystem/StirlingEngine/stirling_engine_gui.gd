@@ -21,7 +21,7 @@ func set_fuel(amount: float) -> void:
 
 
 ## Sets up the inventory bar that holds the fuel.
-func setup(gui: Control) -> void:
+func setup(gui: GameGUI) -> void:
 	fuel_container.setup(gui)
 
 
