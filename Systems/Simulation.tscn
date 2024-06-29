@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://dglnlp8l7cwvc"]
+[gd_scene load_steps=22 format=4 uid="uid://dglnlp8l7cwvc"]
 
 [ext_resource type="Script" path="res://Systems/simulation.gd" id="1_q45le"]
 [ext_resource type="TileSet" uid="uid://cgxr4kr0mbhgb" path="res://Resources/tileset.tres" id="2_er2vg"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cv0ywnkoudexn" path="res://Entities/Common/Ore/ore_boulder_entity.tscn" id="11_f6fpa"]
 [ext_resource type="PackedScene" uid="uid://b68iox5gvf4oi" path="res://Entities/Chest/chest_entity.tscn" id="12_ktv34"]
 [ext_resource type="PackedScene" uid="uid://cstt5vsg7svpv" path="res://Entities/PowerSystem/StirlingEngine/stirling_engine_entity.tscn" id="14_2od1v"]
+[ext_resource type="PackedScene" uid="uid://q345dw1rfavj" path="res://Entities/WorkSystem/Furnace/furnace_entity.tscn" id="14_sm5dw"]
 
 [sub_resource type="Resource" id="Resource_c7fqs"]
 script = ExtResource("4_uaa3k")
@@ -40,6 +41,11 @@ script = ExtResource("4_uaa3k")
 type = 14
 amount = 1
 
+[sub_resource type="Environment" id="Environment_yxhpj"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
+
 [node name="Simulation" type="Node"]
 script = ExtResource("1_q45le")
 tile_label_scene = ExtResource("2_x6hjd")
@@ -53,6 +59,9 @@ debug_items = Array[ExtResource("4_uaa3k")]([SubResource("Resource_c7fqs"), SubR
 [node name="SystemsTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 autostart = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_yxhpj")
 
 [node name="GameWorld" type="Node2D" parent="."]
 
@@ -106,6 +115,9 @@ position = Vector2(301, 46)
 
 [node name="StirlingEngineEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("14_2od1v")]
 position = Vector2(453, -73)
+
+[node name="FurnaceEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("14_sm5dw")]
+position = Vector2(552, 26)
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
 unique_name_in_owner = true
