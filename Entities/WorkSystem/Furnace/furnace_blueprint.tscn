@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dge30imjnyfxm"]
+
+[ext_resource type="Script" path="res://Entities/blueprint_entity.gd" id="1_voumu"]
+[ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_03ukw"]
+
+[node name="FurnaceBlueprint" type="Node2D"]
+script = ExtResource("1_voumu")
+type = 18
+stack_size = 5
+description = "Consumes fuel to smelt ore into ingots"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+texture = ExtResource("2_03ukw")
+region_enabled = true
+region_rect = Rect2(449, 119, 102, 102)

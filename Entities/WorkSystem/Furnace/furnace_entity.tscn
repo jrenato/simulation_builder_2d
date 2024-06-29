@@ -1,0 +1,151 @@
+[gd_scene load_steps=9 format=3 uid="uid://q345dw1rfavj"]
+
+[ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="1_f02xr"]
+[ext_resource type="Script" path="res://Systems/Work/work_component.gd" id="1_k38il"]
+[ext_resource type="Script" path="res://GUI/gui_component.gd" id="2_qcc1c"]
+
+[sub_resource type="Gradient" id="Gradient_kbhdx"]
+offsets = PackedFloat32Array(0, 0.786667, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Animation" id="Animation_pey25"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Vents:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2.62, 0.78, 0.27, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yi60y"]
+resource_name = "shutdown"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Vents:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(2.62, 0.78, 0.27, 1), Color(2.62, 0.78, 0.27, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_52r1d"]
+resource_name = "work"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Vents:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(2.62, 0.78, 0.27, 0), Color(2.62, 0.78, 0.27, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8b65v"]
+_data = {
+"RESET": SubResource("Animation_pey25"),
+"shutdown": SubResource("Animation_yi60y"),
+"work": SubResource("Animation_52r1d")
+}
+
+[node name="FurnaceEntity" type="StaticBody2D"]
+
+[node name="WorkComponent" type="Node" parent="."]
+script = ExtResource("1_k38il")
+
+[node name="GUIComponent" type="Node" parent="."]
+script = ExtResource("2_qcc1c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+texture = ExtResource("1_f02xr")
+region_enabled = true
+region_rect = Rect2(119, 229, 102, 102)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 25, -50, 0, -50, -13, 0, -37, 50, -14, 50, 0)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(3, 1, 0.08, 1)
+position = Vector2(-28, -12)
+emitting = false
+lifetime = 0.5
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(12, 2.5)
+direction = Vector2(-1, -0.175)
+gravity = Vector2(0, 98)
+initial_velocity_min = 0.5
+initial_velocity_max = 67.13
+scale_amount_max = 2.0
+color_ramp = SubResource("Gradient_kbhdx")
+
+[node name="Vents" type="Node2D" parent="."]
+modulate = Color(2.62, 0.78, 0.27, 1)
+
+[node name="FrontVents" type="Sprite2D" parent="Vents"]
+unique_name_in_owner = true
+position = Vector2(-28, -12)
+texture = ExtResource("1_f02xr")
+region_enabled = true
+region_rect = Rect2(239, 279, 26, 28)
+
+[node name="LoadingVents" type="Sprite2D" parent="Vents"]
+unique_name_in_owner = true
+position = Vector2(25, 3)
+texture = ExtResource("1_f02xr")
+region_enabled = true
+region_rect = Rect2(292, 299, 26, 19)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8b65v")
+}
