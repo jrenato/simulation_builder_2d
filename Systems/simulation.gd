@@ -15,6 +15,7 @@ var _tracker: EntityTracker = EntityTracker.new()
 @onready var _gui: GameGUI = %GUI
 
 @onready var _power_system: PowerSystem = PowerSystem.new()
+@onready var _work_system: WorkSystem = WorkSystem.new()
 
 
 func _ready() -> void:
@@ -26,6 +27,8 @@ func _ready() -> void:
 
 	if _power_system:
 		print("Power System enabled")
+	if _work_system:
+		print("Work System enabled")
 	#numerate_ground()
 
 

@@ -90,7 +90,6 @@ var recipes: Dictionary = {
 	TYPE.WIRE: load("res://Systems/Recipes/wire_recipe.tres"),
 }
 
-
 var entity_groups = {
 	# Type -> efficiency
 	GROUP_TYPE.FUELS: {
