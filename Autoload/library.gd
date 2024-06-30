@@ -24,6 +24,7 @@ enum TYPE {
 	CHARCOAL,
 
 	FURNACE,
+	NONE,
 }
 
 enum GROUP_TYPE {
@@ -109,6 +110,10 @@ var entity_groups = {
 
 ## Returns `true` if the provided item matches the provided filter arrays.
 func is_valid_filter(item_type: TYPE, item_filters: Array[Library.TYPE], group_filters: Array[Library.GROUP_TYPE]) -> bool:
+	# It's an output only slot
+	if TYPE.NONE in item_filters:
+		return false
+
 	# If there is no filter, any item is accepted
 	if item_filters.is_empty() and group_filters.is_empty():
 		return true

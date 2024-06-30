@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://q345dw1rfavj"]
+[gd_scene load_steps=11 format=3 uid="uid://q345dw1rfavj"]
 
+[ext_resource type="Script" path="res://Entities/WorkSystem/Furnace/furnace_entity.gd" id="1_btrw4"]
 [ext_resource type="Texture2D" uid="uid://bcbm0goi1n4r" path="res://Assets/tileset.png" id="1_f02xr"]
 [ext_resource type="Script" path="res://Systems/Work/work_component.gd" id="1_k38il"]
 [ext_resource type="Script" path="res://GUI/gui_component.gd" id="2_qcc1c"]
+[ext_resource type="PackedScene" uid="uid://cjqwhd0fo7jx4" path="res://Entities/WorkSystem/Furnace/furnace_gui.tscn" id="3_f6kua"]
 
 [sub_resource type="Gradient" id="Gradient_kbhdx"]
 offsets = PackedFloat32Array(0, 0.786667, 1)
@@ -97,12 +99,14 @@ _data = {
 }
 
 [node name="FurnaceEntity" type="StaticBody2D"]
+script = ExtResource("1_btrw4")
 
 [node name="WorkComponent" type="Node" parent="."]
 script = ExtResource("1_k38il")
 
 [node name="GUIComponent" type="Node" parent="."]
 script = ExtResource("2_qcc1c")
+GuiWindow = ExtResource("3_f6kua")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -25)
