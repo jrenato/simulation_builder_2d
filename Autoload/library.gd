@@ -40,6 +40,7 @@ var entity_names: Dictionary = {
 	TYPE.BRANCH: "Branch",
 	TYPE.TREE: "Tree",
 	TYPE.LUMBER: "Lumber",
+	TYPE.COAL: "Coal",
 	TYPE.BOULDER: "Boulder",
 	TYPE.STONE: "Stone",
 	TYPE.ORE_BOULDER: "Ore Boulder",
@@ -76,6 +77,7 @@ var blueprints: Dictionary = {
 
 	TYPE.BRANCH: load("res://Entities/Common/Branch/branch_blueprint.tscn"),
 	TYPE.LUMBER: load("res://Entities/Common/Lumber/lumber_blueprint.tscn"),
+	TYPE.COAL: load("res://Entities/Common/Lumber/coal_blueprint.tscn"),
 	TYPE.STONE: load("res://Entities/Common/Stone/stone_blueprint.tscn"),
 	TYPE.ORE: load("res://Entities/Common/Ore/ore_blueprint.tscn"),
 	TYPE.INGOT: load("res://Entities/Common/Ore/ingot_blueprint.tscn"),

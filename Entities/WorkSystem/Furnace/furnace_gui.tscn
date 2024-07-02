@@ -32,7 +32,7 @@ unique_name_in_owner = true
 layout_mode = 2
 alignment = 2
 slot_count = 1
-item_filter = Array[int]([9])
+item_filter = Array[int]([9, 5])
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
