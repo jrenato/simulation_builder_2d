@@ -37,8 +37,8 @@ func work(time: float) -> void:
 	if work_tween:
 		work_tween.kill()
 
-	work_tween = create_tween()
-	work_tween.tween_property(work_bar, "value", 1.0, time)
+	work_tween = get_tree().create_tween()
+	work_tween.tween_method(_advance_work_time, 0.0, 1.0, time)
 
 
 ## Stops the tween animation and resets the arrow fill amount.
@@ -46,6 +46,20 @@ func abort() -> void:
 	if work_tween:
 		work_tween.kill()
 	work_bar.value = 0
+
+
+## Updates the *fuel* bar's `fill_amount` shader parameter.
+func set_fuel(amount: float) -> void:
+	fuel_bar.value = amount
+
+
+## If the tween is already animating, seek to the current amount of time.
+## We use this when we start animating, close the inventory, and then open it
+## again later. This makes sure the tween is updated to the amount of time
+## left crafting.
+#func seek(time: float) -> void:
+	#if work_tween and work_tween.is_running():
+		#work_tween.seek(time)
 
 
 ## Sets up all inventory slots.
@@ -78,6 +92,12 @@ func update_labels() -> void:
 	input_container.update_labels()
 	fuel_container.update_labels()
 	output_container.update_labels()
+
+
+## Sets the *arrow*'s value so it fills up. Called by the tween node.
+func _advance_work_time(amount: float) -> void:
+	#prints("tweening!", amount)
+	work_bar.value = amount
 
 
 # When the player changes the item in the input inventory slot, we store a

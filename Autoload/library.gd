@@ -90,14 +90,14 @@ var blueprints: Dictionary = {
 	TYPE.FURNACE: load("res://Entities/WorkSystem/Furnace/furnace_blueprint.tscn"),
 }
 
-## The dictionary holds recipes keyed to their types.
 var recipes: Dictionary = {
 	TYPE.STIRLING: load("res://Systems/Recipes/stirling_engine_recipe.tres"),
 	TYPE.BATTERY: load("res://Systems/Recipes/battery_recipe.tres"),
 	TYPE.WIRE: load("res://Systems/Recipes/wire_recipe.tres"),
 }
 
-var entity_groups = {
+
+var entity_groups: Dictionary = {
 	# Type -> efficiency
 	GROUP_TYPE.FUELS: {
 		TYPE.BRANCH: 10.0,

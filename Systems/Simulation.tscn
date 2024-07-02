@@ -117,7 +117,7 @@ position = Vector2(301, 46)
 position = Vector2(453, -73)
 
 [node name="FurnaceEntity" parent="GameWorld/YSort/EntityPlacer" instance=ExtResource("14_sm5dw")]
-position = Vector2(552, 26)
+position = Vector2(600, 0)
 
 [node name="Player" parent="GameWorld/YSort" instance=ExtResource("2_y48q4")]
 unique_name_in_owner = true

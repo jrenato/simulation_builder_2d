@@ -20,6 +20,7 @@ config/icon="res://icon.png"
 
 Events="*res://Autoload/events.gd"
 Library="*res://Autoload/library.gd"
+Recipes="*res://Autoload/recipes.gd"
 
 [debug]
 
@@ -42,6 +43,7 @@ power_sources=""
 power_movers=""
 power_receivers=""
 gui_entities=""
+workers=""
 
 [gui]
 

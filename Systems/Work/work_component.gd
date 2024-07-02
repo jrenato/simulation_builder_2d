@@ -5,14 +5,13 @@ class_name WorkComponent extends Node
 signal work_accomplished(amount: float)
 
 ## Emitted when all the work has been accomplished.
-signal work_done(output: Entity)
+signal work_done(output: BlueprintEntity)
 
 ## Emitted when something causes the worker to stop working.
 signal work_enabled_changed(enabled: bool)
 
-
 ## The recipe we are currently using to do the automated crafting with.
-var current_recipe: RecipeInput
+var current_recipe: Dictionary
 
 ## The expected blueprint that should result from this crafting job.
 var current_output: BlueprintEntity
@@ -40,7 +39,7 @@ var is_enabled: bool = false: set = _set_is_enabled
 ## configures the component with the crafting job. Otherwise, it returns
 ## `false`.
 func setup_work(inputs: Dictionary, recipe_map: Dictionary) -> bool:
-	# The `recipe_map` has an `inputs` array that's keyed to ingredient names and
+	# The `recipe_map` has an `inputs` array that's keyed to ingredient types and
 	# amounts.
 	#
 	# So for each recipe in the `recipe_map`, we compare the recipe's inputs to
