@@ -9,5 +9,6 @@ const CRAFTING: Dictionary = {
 ## inputs dictionary of input type with amounts and an amount of time it takes
 ## to craft.
 const SMELTING: Dictionary = {
-	Library.TYPE.INGOT: {inputs = {Library.TYPE.ORE: 1}, amount = 1, time = 5.0}
+	Library.TYPE.INGOT: {inputs = {Library.TYPE.ORE: 1}, amount = 1, time = 5.0},
+	Library.TYPE.COAL: {inputs = {Library.TYPE.LUMBER: 1}, amount = 2, time = 3.0}
 }
