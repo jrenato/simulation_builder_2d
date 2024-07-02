@@ -37,7 +37,7 @@ func work(time: float) -> void:
 	if work_tween:
 		work_tween.kill()
 
-	work_tween = get_tree().create_tween()
+	work_tween = create_tween()
 	work_tween.tween_method(_advance_work_time, 0.0, 1.0, time)
 
 
@@ -57,9 +57,12 @@ func set_fuel(amount: float) -> void:
 ## We use this when we start animating, close the inventory, and then open it
 ## again later. This makes sure the tween is updated to the amount of time
 ## left crafting.
-#func seek(time: float) -> void:
-	#if work_tween and work_tween.is_running():
-		#work_tween.seek(time)
+func seek(time: float, initial_value: float) -> void:
+	if work_tween:
+		work_tween.kill()
+
+	work_tween = create_tween()
+	work_tween.tween_method(_advance_work_time, initial_value, 1.0, time)
 
 
 ## Sets up all inventory slots.
@@ -96,7 +99,6 @@ func update_labels() -> void:
 
 ## Sets the *arrow*'s value so it fills up. Called by the tween node.
 func _advance_work_time(amount: float) -> void:
-	#prints("tweening!", amount)
 	work_bar.value = amount
 
 

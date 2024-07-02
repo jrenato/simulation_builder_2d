@@ -12,7 +12,7 @@ func _ready() -> void:
 	work.work_accomplished.connect(_on_work_component_work_accomplished)
 	work.work_done.connect(_on_work_component_work_done)
 	work.work_enabled_changed.connect(_on_work_component_work_enabled_changed)
-	#gui.gui_opened.connect(_on_gui_component_gui_opened)
+	gui.gui_opened.connect(_on_gui_component_gui_opened)
 	gui.gui_status_changed.connect(_on_gui_component_gui_status_changed)
 	# We don't plan on having different fuels cause different work speeds, so we
 	# just set it to 100% speed all the time.
@@ -150,9 +150,12 @@ func _on_gui_component_gui_opened() -> void:
 	if work.is_enabled:
 		# We call work to start the tween so it's properly configured.
 		gui.gui.work(work.current_recipe.time)
-		# With the tween running, we can seek to it. We can't seek with a tween
-		# that's not running, after all.
-		#gui.gui.seek(work.current_recipe.time - work.available_work)
+		# With the tween running, we can seek to it.
+		# We can't seek with a tween that's not running, after all.
+		gui.gui.seek(
+			work.current_recipe.time,
+			(work.current_recipe.time - work.available_work) / work.current_recipe.time
+		)
 
 
 ## Whenever the work component accomplishes any amount of work, consume some
