@@ -98,7 +98,7 @@ _data = {
 "work": SubResource("Animation_52r1d")
 }
 
-[node name="FurnaceEntity" type="StaticBody2D" groups=["gui_entities", "workers"]]
+[node name="FurnaceEntity" type="StaticBody2D" groups=["gui_entities", "power_receivers", "workers"]]
 script = ExtResource("1_btrw4")
 
 [node name="WorkComponent" type="Node" parent="."]

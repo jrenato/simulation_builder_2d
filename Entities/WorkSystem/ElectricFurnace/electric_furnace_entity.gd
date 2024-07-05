@@ -13,11 +13,9 @@ func _ready() -> void:
 	gui_component.gui_opened.connect(_on_gui_component_gui_opened)
 	power_receiver.received_power.connect(_on_power_receiver_received_power)
 
-
-func _ready() -> void:
 	# We always want the furnace to draw power, so it activates instantly when
 	# it receives electricity and has a job to do.
-	power.efficiency = 1.0
+	power_receiver.efficiency = 1.0
 
 
 func _set_initial_speed() -> void:
@@ -32,12 +30,11 @@ func _consume_fuel(amount: float) -> void:
 
 ## As we need to keep the speed up to date as well as update the craft's status,
 ## we override the signal callback to pass the speed in.
-func _on_GUIComponent_gui_opened() -> void:
+func _on_gui_component_gui_opened() -> void:
 	if work.is_enabled and work.work_speed > 0.0:
 		gui.gui.work(work.current_recipe.time)
 		gui.gui.update_speed(work.work_speed)
 		gui.gui.seek(work.current_recipe.time - work.available_work)
-
 
 
 func _on_power_receiver_received_power(amount: float, delta: float):
@@ -47,7 +44,7 @@ func _on_power_receiver_received_power(amount: float, delta: float):
 	#
 	# The power system never sends more than we need, so we don't have to clamp
 	# it to 1.
-	var new_work_speed: float = amount / power.power_required
+	var new_work_speed: float = amount / power_receiver.power_required
 
 	gui.gui.update_speed(new_work_speed)
 	work.work_speed = new_work_speed
