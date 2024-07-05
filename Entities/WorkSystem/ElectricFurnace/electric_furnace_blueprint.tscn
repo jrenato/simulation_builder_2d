@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqu4o7hg88xwe"]
+
+[ext_resource type="Script" path="res://Entities/blueprint_entity.gd" id="1_6u0in"]
+[ext_resource type="Texture2D" uid="uid://bvcfe13u82ela" path="res://Assets/blueprints.svg" id="2_q5xvk"]
+[ext_resource type="PackedScene" uid="uid://bpgdmjus3ec4g" path="res://Systems/Power/power_direction.tscn" id="3_prlc7"]
+
+[node name="ElectricFurnaceBlueprint" type="Node2D"]
+script = ExtResource("1_6u0in")
+stack_size = 5
+description = "Uses power to smelt ore into ingots"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+texture = ExtResource("2_q5xvk")
+region_enabled = true
+region_rect = Rect2(559, 119, 102, 102)
+
+[node name="PowerDirection" parent="." instance=ExtResource("3_prlc7")]
+output_directions = 0

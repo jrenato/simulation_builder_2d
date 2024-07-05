@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://6ejo6ie5csrd"]
+
+[ext_resource type="PackedScene" uid="uid://4vjolsmd3wyq" path="res://GUI/inventory_bar.tscn" id="1_gty0h"]
+[ext_resource type="Script" path="res://Entities/WorkSystem/ElectricFurnace/electric_furnace_gui.gd" id="1_u0tum"]
+[ext_resource type="Texture2D" uid="uid://c7sgrx0lycx5m" path="res://Assets/progress_arrow.png" id="2_m7i61"]
+
+[node name="ElectricFurnaceGUI" type="MarginContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_u0tum")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="InputInventoryBar" parent="HBoxContainer" instance=ExtResource("1_gty0h")]
+layout_mode = 2
+alignment = 2
+slot_count = 1
+
+[node name="WorkProgressBar" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+texture_under = ExtResource("2_m7i61")
+texture_progress = ExtResource("2_m7i61")
+tint_under = Color(0.188235, 0.462745, 1, 1)
+tint_progress = Color(0.188235, 1, 1, 1)
+
+[node name="OutputInventoryBar" parent="HBoxContainer" instance=ExtResource("1_gty0h")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+slot_count = 1

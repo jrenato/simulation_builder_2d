@@ -25,6 +25,7 @@ enum TYPE {
 
 	FURNACE,
 	NONE,
+	ELECTRIC_FURNACE,
 }
 
 enum GROUP_TYPE {
@@ -55,6 +56,7 @@ var entity_names: Dictionary = {
 	TYPE.CHEST: "Chest",
 
 	TYPE.FURNACE: "Furnace",
+	TYPE.ELECTRIC_FURNACE: "Electric Furnace",
 }
 
 ## This dictionary holds the entities keyed to their types.
@@ -90,6 +92,7 @@ var blueprints: Dictionary = {
 	TYPE.CHEST: load("res://Entities/Chest/chest_blueprint.tscn"),
 
 	TYPE.FURNACE: load("res://Entities/WorkSystem/Furnace/furnace_blueprint.tscn"),
+	TYPE.ELECTRIC_FURNACE: load("res://Entities/WorkSystem/ElectricFurnace/electric_furnace_blueprint.tscn"),
 }
 
 var recipes: Dictionary = {
