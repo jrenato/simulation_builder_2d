@@ -10,7 +10,7 @@ bg_color = Color(0.188235, 0.462745, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiae2"]
 bg_color = Color(0.188235, 1, 1, 1)
 
-[node name="FurnaceGUI" type="MarginContainer"]
+[node name="FurnaceGUI" type="MarginContainer" node_paths=PackedStringArray("input_container", "fuel_container", "fuel_bar")]
 offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
@@ -19,6 +19,9 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_0r7yd")
+input_container = NodePath("HBoxContainer/VBoxContainer/InputInventoryBar")
+fuel_container = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/FuelInventoryBar")
+fuel_bar = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/FuelProgressBar")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -28,7 +31,6 @@ theme_override_constants/separation = 5
 layout_mode = 2
 
 [node name="InputInventoryBar" parent="HBoxContainer/VBoxContainer" instance=ExtResource("1_u5j5u")]
-unique_name_in_owner = true
 layout_mode = 2
 alignment = 2
 slot_count = 1
@@ -38,7 +40,6 @@ item_filter = Array[int]([9, 5])
 layout_mode = 2
 
 [node name="FuelProgressBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -49,7 +50,6 @@ fill_mode = 3
 show_percentage = false
 
 [node name="FuelInventoryBar" parent="HBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("1_u5j5u")]
-unique_name_in_owner = true
 layout_mode = 2
 slot_count = 1
 group_filter = Array[int]([0])

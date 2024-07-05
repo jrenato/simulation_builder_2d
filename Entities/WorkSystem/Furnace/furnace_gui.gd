@@ -1,28 +1,41 @@
-extends BaseMachineGUI
+@tool
+class_name FurnaceGUI extends BaseMachineGUI
 
-# Reference to the ore item in the input inventory bar.
+@export var input_container: InventoryBar:
+	set(value):
+		input_container = value
+		update_configuration_warnings()
+
+@export var fuel_container: InventoryBar
+@export var fuel_bar: ProgressBar
+
+## Reference to the ore item in the input inventory bar.
 var input: BlueprintEntity
-# Reference to the fuel item in the fuel inventory bar.
+## Reference to the fuel item in the fuel inventory bar.
 var fuel: BlueprintEntity
-
 # We grab the output panel to work with its inventory directly.
 # This is because the inventory bar would normally check the item filters, which we
 # want to bypass without having to code a workaround.
-var output_slot: Panel
-
+var output_slot: InventorySlot
 var work_tween: Tween
 
 # Those are references to all the nodes we'll need to access in the script.
-@onready var input_container: InventoryBar = %InputInventoryBar
-@onready var fuel_container: InventoryBar = %FuelInventoryBar
 @onready var output_container: InventoryBar = %OutputInventoryBar
-@onready var fuel_bar: ProgressBar = %FuelProgressBar
 @onready var work_bar: TextureProgressBar = %WorkProgressBar
 
 
 func _ready() -> void:
-	input_container.inventory_changed.connect(_on_input_inventory_bar_inventory_changed)
-	fuel_container.inventory_changed.connect(_on_fuel_inventory_bar_inventory_changed)
+	if not Engine.is_editor_hint():
+		input_container.inventory_changed.connect(_on_input_inventory_bar_inventory_changed)
+		if fuel_container:
+			fuel_container.inventory_changed.connect(_on_fuel_inventory_bar_inventory_changed)
+
+
+func _get_configuration_warnings():
+	if not input_container:
+		return ["Input container must be set"]
+
+	return []
 
 
 ## We'll call this function to start the crafting animation (arrow filling up).
