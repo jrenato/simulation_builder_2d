@@ -69,6 +69,7 @@ var entities: Dictionary = {
 	TYPE.STONE: load("res://Entities/Common/Stone/stone_entity.tscn"),
 
 	TYPE.CHEST: load("res://Entities/Chest/chest_entity.tscn"),
+	TYPE.ELECTRIC_FURNACE: load("res://Entities/WorkSystem/ElectricFurnace/electric_furnace_entity.tscn"),
 }
 
 ## The dictionary holds blueprints keyed to their types.

@@ -101,8 +101,7 @@ _data = {
 
 [node name="ElectricFurnaceEntity" type="StaticBody2D"]
 script = ExtResource("1_v0f7k")
-type = null
-deconstruct_filter = null
+type = 20
 drop_type = null
 drop_count = null
 

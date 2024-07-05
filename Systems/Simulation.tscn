@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://dglnlp8l7cwvc"]
+[gd_scene load_steps=25 format=4 uid="uid://dglnlp8l7cwvc"]
 
 [ext_resource type="Script" path="res://Systems/simulation.gd" id="1_q45le"]
 [ext_resource type="TileSet" uid="uid://cgxr4kr0mbhgb" path="res://Resources/tileset.tres" id="2_er2vg"]
@@ -41,6 +41,21 @@ script = ExtResource("4_uaa3k")
 type = 14
 amount = 1
 
+[sub_resource type="Resource" id="Resource_jutdh"]
+script = ExtResource("4_uaa3k")
+type = 0
+amount = 1
+
+[sub_resource type="Resource" id="Resource_sj7jo"]
+script = ExtResource("4_uaa3k")
+type = 1
+amount = 1
+
+[sub_resource type="Resource" id="Resource_0priy"]
+script = ExtResource("4_uaa3k")
+type = 20
+amount = 1
+
 [sub_resource type="Environment" id="Environment_yxhpj"]
 background_mode = 3
 glow_enabled = true
@@ -54,7 +69,7 @@ tile_label_scene = ExtResource("2_x6hjd")
 
 [node name="GUI" parent="CanvasLayer" instance=ExtResource("3_31l27")]
 unique_name_in_owner = true
-debug_items = Array[ExtResource("4_uaa3k")]([SubResource("Resource_c7fqs"), SubResource("Resource_p5yyv"), SubResource("Resource_hspg8"), SubResource("Resource_mgavd"), SubResource("Resource_krwj5")])
+debug_items = Array[ExtResource("4_uaa3k")]([SubResource("Resource_c7fqs"), SubResource("Resource_p5yyv"), SubResource("Resource_hspg8"), SubResource("Resource_mgavd"), SubResource("Resource_krwj5"), SubResource("Resource_jutdh"), SubResource("Resource_sj7jo"), SubResource("Resource_0priy")])
 
 [node name="SystemsTimer" type="Timer" parent="."]
 unique_name_in_owner = true

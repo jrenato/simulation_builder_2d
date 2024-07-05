@@ -12,6 +12,7 @@ var gui: Control
 func setup(_gui: GameGUI) -> void:
 	gui = _gui
 
+
 ## The main function that forces an update of all recipes based on what items
 ## are available in the player's inventory.
 func update_recipes() -> void:
