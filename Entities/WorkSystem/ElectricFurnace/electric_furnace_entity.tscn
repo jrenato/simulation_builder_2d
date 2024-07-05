@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2apb5jp1ehl7"]
+[gd_scene load_steps=12 format=3 uid="uid://b2apb5jp1ehl7"]
 
 [ext_resource type="Script" path="res://Systems/Work/work_component.gd" id="1_jmdp7"]
+[ext_resource type="Script" path="res://Entities/WorkSystem/ElectricFurnace/electric_furnace_entity.gd" id="1_v0f7k"]
 [ext_resource type="PackedScene" uid="uid://be6ku3jhhiqe5" path="res://Systems/Power/power_receiver.tscn" id="2_0j2h2"]
 [ext_resource type="Script" path="res://GUI/gui_component.gd" id="2_fdfx4"]
 [ext_resource type="PackedScene" uid="uid://6ejo6ie5csrd" path="res://Entities/WorkSystem/ElectricFurnace/electric_furnace_gui.tscn" id="4_gdc6c"]
@@ -99,17 +100,23 @@ _data = {
 }
 
 [node name="ElectricFurnaceEntity" type="StaticBody2D"]
+script = ExtResource("1_v0f7k")
+type = null
+deconstruct_filter = null
+drop_type = null
+drop_count = null
 
 [node name="WorkComponent" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_jmdp7")
 
-[node name="PowerReceiver" parent="." instance=ExtResource("2_0j2h2")]
-
 [node name="GUIComponent" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_fdfx4")
 GuiWindow = ExtResource("4_gdc6c")
+
+[node name="PowerReceiver" parent="." instance=ExtResource("2_0j2h2")]
+unique_name_in_owner = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -25)

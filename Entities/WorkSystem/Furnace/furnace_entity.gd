@@ -16,6 +16,10 @@ func _ready() -> void:
 	gui.gui_status_changed.connect(_on_gui_component_gui_status_changed)
 	# We don't plan on having different fuels cause different work speeds, so we
 	# just set it to 100% speed all the time.
+	_set_initial_speed()
+
+
+func _set_initial_speed() -> void:
 	work.work_speed = 1.0
 
 
