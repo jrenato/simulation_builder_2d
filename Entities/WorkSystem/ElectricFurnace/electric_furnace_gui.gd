@@ -7,7 +7,8 @@ func update_speed(speed: float) -> void:
 	if not is_inside_tree():
 		return
 
-	work_tween.set_speed_scale(speed)
+	if work_tween:
+		work_tween.set_speed_scale(speed)
 
 
 func setup(gui: Control) -> void:

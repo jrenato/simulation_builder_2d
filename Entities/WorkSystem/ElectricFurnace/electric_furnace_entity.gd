@@ -11,7 +11,7 @@ func _ready() -> void:
 	work_component.work_accomplished.connect(_on_work_component_work_accomplished)
 	gui_component.gui_status_changed.connect(_on_gui_component_gui_status_changed)
 	gui_component.gui_opened.connect(_on_gui_component_gui_opened)
-	power_receiver.received_power.connect(_on_power_receiver_received_power)
+	power_receiver.power_received.connect(_on_power_receiver_received_power)
 
 	# We always want the furnace to draw power, so it activates instantly when
 	# it receives electricity and has a job to do.
@@ -34,7 +34,10 @@ func _on_gui_component_gui_opened() -> void:
 	if work.is_enabled and work.work_speed > 0.0:
 		gui.gui.work(work.current_recipe.time)
 		gui.gui.update_speed(work.work_speed)
-		gui.gui.seek(work.current_recipe.time - work.available_work)
+		gui.gui.seek(
+			work.current_recipe.time,
+			(work.current_recipe.time - work.available_work) / work.current_recipe.time
+		)
 
 
 func _on_power_receiver_received_power(amount: float, delta: float):

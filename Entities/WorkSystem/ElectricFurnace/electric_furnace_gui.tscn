@@ -4,10 +4,11 @@
 [ext_resource type="Script" path="res://Entities/WorkSystem/ElectricFurnace/electric_furnace_gui.gd" id="1_u0tum"]
 [ext_resource type="Texture2D" uid="uid://c7sgrx0lycx5m" path="res://Assets/progress_arrow.png" id="2_m7i61"]
 
-[node name="ElectricFurnaceGUI" type="MarginContainer"]
+[node name="ElectricFurnaceGUI" type="MarginContainer" node_paths=PackedStringArray("input_container")]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_u0tum")
+input_container = NodePath("HBoxContainer/InputInventoryBar")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

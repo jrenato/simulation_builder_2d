@@ -99,11 +99,10 @@ _data = {
 "work": SubResource("Animation_52r1d")
 }
 
-[node name="ElectricFurnaceEntity" type="StaticBody2D"]
+[node name="ElectricFurnaceEntity" type="StaticBody2D" groups=["gui_entities", "power_receivers", "workers"]]
 script = ExtResource("1_v0f7k")
 type = 20
-drop_type = null
-drop_count = null
+drop_type = 20
 
 [node name="WorkComponent" type="Node" parent="."]
 unique_name_in_owner = true
