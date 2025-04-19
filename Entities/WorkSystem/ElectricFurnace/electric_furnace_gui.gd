@@ -1,4 +1,6 @@
-class_name ElectricFurnaceGUI extends FurnaceGUI
+@tool
+class_name ElectricFurnaceGUI
+extends FurnaceGUI
 
 ## Like with the Stirling engine, when the system isn't being fed with enough
 ## electricity, we can slow it down with a speed parameter by affecting the
